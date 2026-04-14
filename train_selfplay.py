@@ -1,6 +1,21 @@
 import os
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def _env_flag(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+if _env_flag("JAXPOT_DEBUG"):
+    os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "0")
+    os.environ.setdefault("GLOG_minloglevel", "0")
+else:
+    # Hide noisy backend compiler/autotuning logs for normal users.
+    os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")
+    os.environ.setdefault("GLOG_minloglevel", "3")
 
 from pathlib import Path
 from typing import Callable
@@ -8,7 +23,6 @@ from typing import Callable
 import hydra
 import jax
 import jax.numpy as jnp
-from dotenv import load_dotenv
 from hydra.core.hydra_config import HydraConfig
 from hydra.utils import instantiate
 from jax.sharding import Mesh
@@ -43,9 +57,6 @@ from jaxpot.utils.sharding import create_device_mesh, get_replicated_sharding
 from jaxpot.utils.target_network import TargetNetwork
 from jaxpot.utils.timer import Timer
 from jaxpot.utils.utils import dump_debug_file
-
-load_dotenv()
-
 
 def build_aux_target_hooks(trainer: Trainer) -> tuple[AuxTargetHook, ...]:
     """Build rollout auxiliary target hooks based on env and trainer configuration."""
