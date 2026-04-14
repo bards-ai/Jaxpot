@@ -24,6 +24,7 @@ dependencies = [
     "loguru>=0.7.3",
     "tensorboardX>=2.6.2",
     "tensorboard>=2.18.0",
+    "setuptools>=68,<81",
     "pandas>=2.3.3",
     "tqdm>=4.66.0",
     "matplotlib>=3.10.8",
