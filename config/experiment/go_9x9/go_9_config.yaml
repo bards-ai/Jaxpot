@@ -39,11 +39,15 @@ grad_accum_steps: 1
 max_grad_norm: 0.5
 
 eval:
-  - _target_: jaxpot.evaluator.pgx_baseline.PGXBaselineEvaluator
-    baseline_model_id: go_9x9_v0
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
     eval_every: 150
     num_envs: 256
     num_steps: 256
+    name: baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.pgx.baseline.PGXBaselineModel
+      baseline_model_id: go_9x9_v0
+      is_eval: true
 
 eval_every: 150
 save_every: 150
