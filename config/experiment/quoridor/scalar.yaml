@@ -1,0 +1,78 @@
+# @package _global_
+#
+# Quoridor with scalar features (walls remaining) in observation.
+# Uses QuoridorResNetLSTMModel which concatenates scalar features
+# after the ResNet encoder, before the LSTM core.
+
+defaults:
+  - override /logger: multi
+  - override /model: quoridor_resnet_lstm
+  - override /trainer: ppo
+  - override /env: quoridor/scalar
+  - override /eval: quoridor_baseline
+  - _self_
+
+tags: ["quoridor", "resnet_lstm", "scalar_obs"]
+experiment_name: "Quoridor_scalar"
+
+trainer:
+  seq_len: 32
+  num_epochs: 3
+  batch_size: 12_288
+  kl_coef: 1e-4
+  clip_value: 1.0
+  clip_eps: 0.2
+  value_coeff: 0.5
+  entropy_coeff: 0.005
+  entropy_coeff_start: 0.05
+  entropy_decay_iterations: 4000
+  auxiliary_losses: []
+
+model:
+  num_filters: 64
+  num_blocks: 4
+  lstm_hidden_size: 128
+  num_lstm_layers: 1
+
+env:
+  speed_reward_scale: 0.02
+
+seed: 42
+lr: 3e-4
+lr_schedule: "cosine"
+lr_end: 1e-5
+lr_warmup_iters: 50
+
+use_target_selfplay: true
+target_tau: 0.005
+target_update_freq: 1
+
+selfplay_num_envs: 2048
+random_num_envs: 1024
+league_num_envs: 2048
+archive_num_envs: 512
+base_unit: 256
+num_steps: 256
+total_iters: 10_000
+gamma: 0.999
+gae_lambda: 0.95
+grad_accum_steps: 1
+max_grad_norm: 0.5
+
+save_every: 100
+keep_last_k: 5
+best_checkpoint_top_k: 10
+resume_from: null
+
+# League configuration
+league_max_size: 8
+league_fill_every: 50
+league_add_every: 200
+league_temp: 0.6
+league_score_alpha: 0.1
+random_warmup_iters: 50
+league_log_every: 10
+
+# Archive configuration
+archive_max_size: 48
+forgotten_result_margin: 0.001

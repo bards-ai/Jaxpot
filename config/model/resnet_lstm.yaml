@@ -1,0 +1,5 @@
+_target_: jaxpot.models.architectures.resnet_lstm.ResNetLSTMModel
+num_filters: 128
+num_blocks: 6
+lstm_hidden_size: 256
+num_lstm_layers: 1

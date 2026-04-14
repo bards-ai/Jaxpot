@@ -1,0 +1,10 @@
+defaults:
+  - wandb
+  - tensorboard
+
+_target_: jaxpot.loggers.multi.MultiLogger
+_recursive_: false
+logger_configs:
+  - ${logger.wandb}
+  - ${logger.tensorboard}
+run_id: null

@@ -1,0 +1,3 @@
+_target_: jaxpot.rollout.advantage_gatherers.GAEAdvantageGatherer
+gamma: 0.99
+gae_lambda: 0.95

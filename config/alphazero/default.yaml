@@ -1,0 +1,5 @@
+num_simulations: 32
+max_num_considered_actions: 16
+dirichlet_alpha: 0.3
+exploration_fraction: 0.25
+gamma: 1.0

@@ -1,0 +1,54 @@
+# @package _global_
+# Kuhn Nash hist v2 — tighter clip (0.01), higher ent (0.15), more envs
+# v1 oscillated 0.012-0.04. Tighten everything to reduce oscillation.
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: kuhn_poker/default
+  - override /eval: kuhn_poker_hist
+  - _self_
+
+tags: ["kuhn_poker", "nash_hist_v2"]
+experiment_name: "kuhn_poker_nash_hist_v2"
+
+env_action_history_len: 3
+
+model:
+  hidden_dims: [64, 64, 64]
+  activation: tanh
+
+trainer:
+  num_epochs: 8
+  batch_size: 4096
+  auxiliary_losses: []
+  clip_eps: 0.01
+  clip_value: 10.0
+  value_coeff: 0.0625
+  entropy_coeff: 0.15
+  entropy_coeff_start: 0.15
+  entropy_decay_iterations: 1_000_000
+  kl_coef: 0.0
+
+seed: 42
+lr: 2.5e-5
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 4096
+archive_num_envs: 1024
+base_unit: 256
+num_steps: 256
+total_iters: 3_000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 0.5
+save_every: 500
+keep_last_k: 5
+best_checkpoint_top_k: 5
+resume_from: null

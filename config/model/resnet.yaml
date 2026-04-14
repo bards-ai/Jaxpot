@@ -1,0 +1,3 @@
+_target_: jaxpot.models.architectures.resnet.ResNetModel
+num_filters: 128
+num_blocks: 6

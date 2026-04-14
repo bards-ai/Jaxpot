@@ -1,0 +1,3 @@
+_target_: jaxpot.loggers.multi.MultiLogger
+logger_configs: []
+run_id: null

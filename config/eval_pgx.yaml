@@ -1,0 +1,26 @@
+defaults:
+  - _self_
+  - logger: none
+  - train_selfplay
+
+# Required: path to checkpoint
+checkpoint: ???
+
+# Evaluation settings
+num_games: 5
+max_steps_per_game: 5000
+deterministic: true # Greedy vs sampled actions for Agent 1
+
+# Optional second agent (if not provided, Agent 1 plays vs random)
+checkpoint2: null # Path to Agent 2 checkpoint (optional)
+deterministic2:   # Greedy vs sampled for Agent 2 (defaults to same as deterministic)
+
+# Visualization settings (animated SVG)
+frame_duration_ms: 500
+scale: 2.0
+color_theme: "light"
+num_final_frames: 8 # Extra frames at end to pause on final state
+
+seed: 42
+tags: ["pgx_eval"]
+experiment_name: "pgx_eval"

@@ -1,0 +1,7 @@
+wandb:
+  _target_: jaxpot.loggers.wandb.WandbLogger
+  project_name: ???
+  run_name: ${experiment_name}
+  entity: ???
+  run_id: null
+  tags: ${tags}

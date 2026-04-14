@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ game_name }}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0c0c1d;
+    color: #d4d4d8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #e8e0d4;
+    margin-bottom: 6px;
+  }
+
+  /* Status */
+  #status {
+    font-size: 0.95em;
+    margin: 6px 0 14px;
+    min-height: 1.3em;
+    color: #8b8b9e;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  #status.win  { color: #6ee7b7; }
+  #status.lose { color: #fca5a5; }
+  #status.draw { color: #fcd34d; }
+
+  /* New game button */
+  #new-game-btn {
+    padding: 10px 32px;
+    background: transparent;
+    color: #8b8b9e;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-top: 16px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  #new-game-btn:hover {
+    border-color: rgba(110,231,183,0.4);
+    color: #6ee7b7;
+    background: rgba(110,231,183,0.05);
+  }
+</style>
+</head>
+<body>
+
+<h1>{{ game_name }}</h1>
+<div id="status">Loading...</div>
+
+<!-- Game-specific content injected here -->
+{{ game_content }}
+
+<button id="new-game-btn" onclick="newGame()">New Game</button>
+
+<script>
+// ── Shared API helpers ──
+async function apiPost(url, body) {
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return resp.json();
+}
+
+async function apiGet(url) {
+  const resp = await fetch(url);
+  return resp.json();
+}
+
+// Shared game state
+let gameState = null;
+
+function setStatus(text, cls) {
+  const el = document.getElementById('status');
+  el.className = cls || '';
+  el.textContent = text;
+}
+
+async function newGame() {
+  try {
+    gameState = await apiPost('/api/new_game');
+    renderBoard();
+  } catch (e) {
+    setStatus('Error: ' + e.message);
+  }
+}
+
+async function makeMove(actionId) {
+  setStatus('Bot thinking...');
+  try {
+    gameState = await apiPost('/api/move', {action_id: actionId});
+    renderBoard();
+  } catch (e) {
+    setStatus('Error: ' + e.message);
+  }
+}
+
+async function loadState() {
+  try {
+    gameState = await apiGet('/api/state');
+    renderBoard();
+  } catch (e) {
+    setStatus('Error connecting to server');
+  }
+}
+
+// Update status based on game result
+function updateGameStatus() {
+  if (!gameState) return;
+  if (gameState.terminated) {
+    if (gameState.result === 'win')  setStatus('You won!', 'win');
+    else if (gameState.result === 'lose') setStatus('Bot won!', 'lose');
+    else setStatus('Draw!', 'draw');
+  } else {
+    let msg = 'Your turn';
+    if (gameState.last_bot_move) {
+      msg += ' \u2014 Bot played: ' + gameState.last_bot_move;
+    }
+    setStatus(msg);
+  }
+}
+
+// renderBoard() must be defined by the game-specific frontend
+// It will be called after state updates.
+
+// Boot
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof initGame === 'function') initGame();
+  loadState();
+});
+</script>
+
+</body>
+</html>

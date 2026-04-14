@@ -1,0 +1,41 @@
+# @package _global_
+
+defaults:
+  - override /logger: multi
+  - override /model: connect4_mlp
+  - override /trainer: ppo
+  - override /env: connect4/default
+  - override /eval: connect4_baseline
+  - _self_
+
+tags: ["connect4"]
+experiment_name: "connect4_selfplay"
+
+trainer:
+  num_epochs: 2
+  batch_size: 8192
+  auxiliary_losses: []
+  clip_eps: 0.1
+  entropy_decay_iterations: 10_000
+
+seed: 42
+lr: 1e-4
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 256
+total_iters: 20_000
+grad_accum_steps: 1
+gamma: 0.999
+gae_lambda: 0.95
+
+max_grad_norm: 1.0
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null

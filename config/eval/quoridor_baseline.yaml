@@ -1,0 +1,36 @@
+# @package _global_
+#
+# Quoridor heuristic baseline evaluator + random evaluator.
+# Usage: add `- override /eval: quoridor_baseline` to your experiment defaults.
+#
+eval:
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    name: quoridor_baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.quoridor.baseline.QuoridorBaseline
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    name: quoridor_bfs_baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.quoridor.bfs_baseline.QuoridorBFSBaseline
+  - _target_: jaxpot.evaluator.league.ArchivedLeagueEvaluator
+    eval_every: 500
+    num_envs: 4096
+    num_steps: ${num_steps}

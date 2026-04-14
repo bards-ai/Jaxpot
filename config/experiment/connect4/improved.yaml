@@ -1,0 +1,68 @@
+# @package _global_
+#
+# Connect4 improved — ResNet + target selfplay + cosine LR + entropy floor.
+#
+# Key changes vs default.yaml:
+#   - ResNet model (64 filters, 6 blocks) for spatial pattern recognition
+#   - Target selfplay (slow EMA opponent) to prevent strategy cycling
+#   - Cosine LR decay 3e-4 → 1e-5 to stabilize late training
+#   - Higher entropy floor (0.005) to prevent policy collapse
+#   - Slower league additions (every 500 iters) for stability
+#   - 4 PPO epochs with batch_size 4096 for more thorough gradient steps
+#
+
+defaults:
+  - override /logger: multi
+  - override /model: resnet
+  - override /trainer: ppo
+  - override /env: connect4/default
+  - override /eval: connect4_baseline
+  - _self_
+
+tags: ["connect4", "improved"]
+experiment_name: "connect4_improved"
+
+model:
+  num_filters: 64
+  num_blocks: 6
+
+trainer:
+  num_epochs: 3
+  batch_size: 16384
+  clip_eps: 0.2
+  entropy_coeff: 0.005
+  entropy_coeff_start: 0.02
+  entropy_decay_iterations: 5000
+  auxiliary_losses: []
+
+seed: 42
+lr: 3e-4
+lr_schedule: "cosine"
+lr_end: 1e-5
+lr_warmup_iters: 50
+multi_gpu: false
+use_target_selfplay: true
+target_tau: 0.005
+target_update_freq: 1
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 128
+total_iters: 10_000
+grad_accum_steps: 1
+gamma: 0.999
+gae_lambda: 0.95
+
+# Warmup: learn basics vs random before self-play
+random_warmup_iters: 100
+
+# League: add slowly to maintain diversity without destabilizing
+league_add_every: 500
+
+max_grad_norm: 1.0
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null

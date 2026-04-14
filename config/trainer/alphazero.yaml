@@ -1,0 +1,6 @@
+_target_: jaxpot.rl.alphazero_trainer.AlphaZeroTrainer
+num_epochs: 2
+batch_size: 16_384
+max_grad_norm: 1.0
+value_coeff: 1.0
+policy_coeff: 1.0

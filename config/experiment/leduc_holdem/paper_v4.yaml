@@ -1,0 +1,53 @@
+# @package _global_
+# Leduc Holdem v4 — constant high entropy, tighter clip
+# v3 was stale at ~0.39 exploitability. Best expl (0.29) was early when entropy high.
+# Fix: constant entropy 0.1 (no decay), clip 0.05, smaller model (81 unique obs)
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: leduc_holdem/default
+  - override /eval: leduc_holdem
+  - _self_
+
+tags: ["leduc_holdem", "paper_v4"]
+experiment_name: "leduc_holdem_v4"
+
+model:
+  hidden_dims: [128, 128, 128]
+  activation: tanh
+
+trainer:
+  num_epochs: 4
+  batch_size: 4096
+  auxiliary_losses: []
+  clip_eps: 0.05
+  clip_value: 10.0
+  value_coeff: 0.25
+  entropy_coeff: 0.1
+  entropy_coeff_start: 0.1
+  entropy_decay_iterations: 1_000_000  # effectively no decay
+  kl_coef: 0.0
+
+seed: 42
+lr: 6.25e-5
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 256
+total_iters: 10_000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 0.5
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null

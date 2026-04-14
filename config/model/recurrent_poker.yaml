@@ -1,0 +1,12 @@
+_target_: jaxpot.models.games.poker.recurrent_poker.RecurrentPokerModel
+action_dim: 10
+embed_dim: 64
+hidden_size: 256
+num_lstm_layers: 2
+feature_dim: 256
+num_card_res: 1
+num_decode_layers: 2
+ffn_expansion: 4
+dropout: 0.0
+use_street_gate: true
+enable_opp_cards_head: true

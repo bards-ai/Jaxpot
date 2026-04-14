@@ -1,0 +1,18 @@
+# @package _global_
+#
+# PGX baseline evaluators for Go 9x9 AlphaZero training.
+# Usage: add `- eval: go_9_alphazero` to your run defaults.
+#
+eval:
+  - _target_: jaxpot.evaluator.pgx_baseline.PGXBaselineEvaluator
+    baseline_model_id: go_9x9_v0
+    eval_every: 20
+    num_envs: 256
+    num_steps: 256
+  - _target_: jaxpot.evaluator.pgx_baseline.PGXBaselinePpoEvaluator
+    baseline_model_id: go_9x9_v0
+    eval_every: 5
+    num_envs: 256
+    num_steps: 256
+    deterministic: true
+    log_prefix: baseline_ppo

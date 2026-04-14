@@ -1,0 +1,6 @@
+# @package _global_
+eval:
+  - _target_: jaxpot.evaluator.league.ArchivedLeagueEvaluator
+    eval_every: 500
+    num_envs: 5000
+    num_steps: ${num_steps}

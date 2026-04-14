@@ -1,0 +1,2 @@
+_target_: jaxpot.rollout.advantage_gatherers.PerSeatReturnGatherer
+backup_gamma: 1.0

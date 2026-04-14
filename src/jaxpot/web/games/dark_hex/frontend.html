@@ -1,0 +1,382 @@
+<style>
+  #hex-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #hex-info {
+    display: flex;
+    gap: 24px;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+  .hex-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .hex-player.you { border-color: rgba(110,231,183,0.25); }
+  .hex-stone {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  }
+  .hex-stone.black {
+    background: radial-gradient(circle at 40% 35%, #444, #111);
+    border: 2px solid #666;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .hex-stone.white {
+    background: radial-gradient(circle at 40% 35%, #f5f5f5, #ccc);
+    border: 2px solid #aaa;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .hex-board-label {
+    font-size: 0.75em;
+    color: #6b6b80;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  #board-wrap {
+    padding: 28px 36px;
+    background: linear-gradient(145deg, #1e1b2e, #161425);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  #hex-board { position: relative; }
+
+  #hex-feedback {
+    font-size: 0.8em;
+    color: #fca5a5;
+    min-height: 1.2em;
+    font-weight: 500;
+  }
+
+  #hex-instructions {
+    max-width: 440px;
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    font-size: 0.8em;
+    line-height: 1.7;
+    color: #6b6b80;
+  }
+  #hex-instructions h3 { color: #9b9bb0; margin-bottom: 6px; font-size: 1em; font-weight: 600; }
+  #hex-instructions strong { color: #9b9bb0; }
+</style>
+
+<div id="hex-wrap">
+  <div id="hex-info">
+    <div class="hex-player" id="hex-info-black">
+      <span class="hex-stone black"></span>
+      <span id="hex-label-black">Black (N-S)</span>
+    </div>
+    <div class="hex-player" id="hex-info-white">
+      <span class="hex-stone white"></span>
+      <span id="hex-label-white">White (W-E)</span>
+    </div>
+  </div>
+
+  <div class="hex-board-label">Your View</div>
+  <div id="board-wrap">
+    <div id="hex-board"></div>
+  </div>
+  <div id="hex-feedback"></div>
+</div>
+
+<div id="hex-instructions">
+  <h3>How to Play</h3>
+  <p><strong>Dark Hex</strong> is Hex with fog of war.
+     You can only see your own stones and cells revealed by failed moves.</p>
+  <p><strong style="color:#888;">Black</strong> connects top to bottom.
+     <strong style="color:#ddd;">White</strong> connects left to right.</p>
+  <p>Click an empty cell to place your stone. If it's already taken,
+     the cell is revealed and you try again.</p>
+</div>
+
+<script>
+const HEX_SIZE = 30;
+const HEX_GAP = 3;
+
+function hexCorners(cx, cy, size) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = Math.PI / 180 * (60 * i - 30);
+    pts.push((cx + size * Math.cos(angle)).toFixed(1) + ',' + (cy + size * Math.sin(angle)).toFixed(1));
+  }
+  return pts.join(' ');
+}
+
+function hexCenter(row, col, size) {
+  const w = size * Math.sqrt(3);
+  const h = size * 2;
+  const x = w * (col + row * 0.5) + size * 1.5;
+  const y = h * 0.75 * row + size * 1.5;
+  return [x, y];
+}
+
+function hexCorner(cx, cy, size, i) {
+  // Returns [x, y] of the i-th corner (0-5), pointy-top hex, -30deg offset
+  const angle = Math.PI / 180 * (60 * i - 30);
+  return [cx + size * Math.cos(angle), cy + size * Math.sin(angle)];
+}
+
+function drawEdgeBorders(svg, NS, numRows, numCols, size) {
+  const s = size - HEX_GAP;
+  const off = 4; // outward offset for the zigzag
+
+  // Top edge (Black start): trace along the top vertices of row 0 cells
+  // For a pointy-top hex, top-left corner = index 5, top-right = index 0
+  {
+    let pts = [];
+    for (let c = 0; c < numCols; c++) {
+      const [cx, cy] = hexCenter(0, c, size);
+      const [x5, y5] = hexCorner(cx, cy, s, 5);
+      const [x0, y0] = hexCorner(cx, cy, s, 0);
+      pts.push([x5, y5 - off]);
+      pts.push([x0, y0 - off]);
+    }
+    const path = document.createElementNS(NS, 'polyline');
+    path.setAttribute('points', pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(100,100,100,0.6)');
+    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+  }
+
+  // Bottom edge (Black goal): trace along the bottom vertices of last row cells
+  // Bottom-left = index 4, bottom-right = index 3
+  {
+    let pts = [];
+    for (let c = 0; c < numCols; c++) {
+      const [cx, cy] = hexCenter(numRows - 1, c, size);
+      const [x4, y4] = hexCorner(cx, cy, s, 4);
+      const [x3, y3] = hexCorner(cx, cy, s, 3);
+      pts.push([x4, y4 + off]);
+      pts.push([x3, y3 + off]);
+    }
+    const path = document.createElementNS(NS, 'polyline');
+    path.setAttribute('points', pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(100,100,100,0.6)');
+    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+  }
+
+  // Left edge (White start): trace along left vertices of col 0 cells
+  // Top-left = index 5, bottom-left = index 4
+  {
+    let pts = [];
+    for (let r = 0; r < numRows; r++) {
+      const [cx, cy] = hexCenter(r, 0, size);
+      const [x5, y5] = hexCorner(cx, cy, s, 5);
+      const [x4, y4] = hexCorner(cx, cy, s, 4);
+      pts.push([x5 - off, y5]);
+      pts.push([x4 - off, y4]);
+    }
+    const path = document.createElementNS(NS, 'polyline');
+    path.setAttribute('points', pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(220,220,220,0.5)');
+    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+  }
+
+  // Right edge (White goal): trace along right vertices of last col cells
+  // Top-right = index 0, bottom-right = index 3 (but we go 0 then 1... wait)
+  // For right side: index 0 = top-right, index 1 = right, index 2 = bottom-right
+  // Actually for right edge we want: top-right (0) then bottom-right (2) per cell...
+  // Let me use 0 and 1 for right-side zigzag
+  {
+    let pts = [];
+    for (let r = 0; r < numRows; r++) {
+      const [cx, cy] = hexCenter(r, numCols - 1, size);
+      const [x0, y0] = hexCorner(cx, cy, s, 0);
+      const [x1, y1] = hexCorner(cx, cy, s, 1);
+      pts.push([x0 + off, y0]);
+      pts.push([x1 + off, y1]);
+    }
+    const path = document.createElementNS(NS, 'polyline');
+    path.setAttribute('points', pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(220,220,220,0.5)');
+    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+  }
+}
+
+function initGame() {}
+
+function renderBoard() {
+  if (!gameState) return;
+
+  const numRows = gameState.num_rows;
+  const numCols = gameState.num_cols;
+  const view = gameState.human_view;
+  const hc = gameState.human_color;
+  const legalSet = new Set(gameState.legal_actions.map(a => a.id));
+
+  // Compute board dimensions (extra padding for zigzag edges)
+  const [maxX, maxY] = hexCenter(numRows - 1, numCols - 1, HEX_SIZE);
+  const boardWidth = maxX + HEX_SIZE * 1.8 + 8;
+  const boardHeight = maxY + HEX_SIZE * 1.8 + 8;
+
+  const board = document.getElementById('hex-board');
+  board.style.width = boardWidth + 'px';
+  board.style.height = boardHeight + 'px';
+  board.innerHTML = '';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('width', boardWidth);
+  svg.setAttribute('height', boardHeight);
+
+  // Draw zigzag edge borders showing connection goals
+  // Black (N-S): zigzag along top and bottom rows
+  // White (W-E): zigzag along left and right columns
+  drawEdgeBorders(svg, NS, numRows, numCols, HEX_SIZE);
+
+  // Draw cells
+  for (let r = 0; r < numRows; r++) {
+    for (let c = 0; c < numCols; c++) {
+      const idx = r * numCols + c;
+      const [cx, cy] = hexCenter(r, c, HEX_SIZE);
+      const val = view[idx];
+      const isLegal = legalSet.has(idx);
+
+      const g = document.createElementNS(NS, 'g');
+      g.style.cursor = isLegal ? 'pointer' : 'default';
+
+      // Hex polygon
+      const poly = document.createElementNS(NS, 'polygon');
+      poly.setAttribute('points', hexCorners(cx, cy, HEX_SIZE - HEX_GAP));
+
+      if (val === 1) {
+        // Black stone
+        poly.setAttribute('fill', '#2a2a2a');
+        poly.setAttribute('stroke', '#555');
+        poly.setAttribute('stroke-width', '2');
+        // Inner stone circle
+        const stone = document.createElementNS(NS, 'circle');
+        stone.setAttribute('cx', cx);
+        stone.setAttribute('cy', cy);
+        stone.setAttribute('r', HEX_SIZE * 0.35);
+        stone.setAttribute('fill', 'url(#black-stone)');
+        stone.setAttribute('stroke', '#666');
+        stone.setAttribute('stroke-width', '1.5');
+        g.appendChild(poly);
+        g.appendChild(stone);
+      } else if (val === 2) {
+        // White stone
+        poly.setAttribute('fill', '#4a4a5a');
+        poly.setAttribute('stroke', '#888');
+        poly.setAttribute('stroke-width', '2');
+        const stone = document.createElementNS(NS, 'circle');
+        stone.setAttribute('cx', cx);
+        stone.setAttribute('cy', cy);
+        stone.setAttribute('r', HEX_SIZE * 0.35);
+        stone.setAttribute('fill', 'url(#white-stone)');
+        stone.setAttribute('stroke', '#bbb');
+        stone.setAttribute('stroke-width', '1.5');
+        g.appendChild(poly);
+        g.appendChild(stone);
+      } else if (isLegal) {
+        // Empty + clickable
+        poly.setAttribute('fill', '#2a2845');
+        poly.setAttribute('stroke', '#3d3a5c');
+        poly.setAttribute('stroke-width', '1.5');
+        g.appendChild(poly);
+
+        // Hover effect via events
+        g.addEventListener('mouseenter', () => {
+          poly.setAttribute('fill', 'rgba(110,231,183,0.2)');
+          poly.setAttribute('stroke', 'rgba(110,231,183,0.5)');
+        });
+        g.addEventListener('mouseleave', () => {
+          poly.setAttribute('fill', '#2a2845');
+          poly.setAttribute('stroke', '#3d3a5c');
+        });
+        g.addEventListener('click', () => makeMove(idx));
+      } else {
+        // Empty + not legal (shouldn't happen in normal play but safety)
+        poly.setAttribute('fill', '#1e1b30');
+        poly.setAttribute('stroke', '#2a2845');
+        poly.setAttribute('stroke-width', '1');
+        g.appendChild(poly);
+      }
+
+      svg.appendChild(g);
+    }
+  }
+
+  // SVG gradients for stones
+  const defs = document.createElementNS(NS, 'defs');
+
+  const blackGrad = document.createElementNS(NS, 'radialGradient');
+  blackGrad.setAttribute('id', 'black-stone');
+  blackGrad.setAttribute('cx', '35%');
+  blackGrad.setAttribute('cy', '30%');
+  let stop = document.createElementNS(NS, 'stop');
+  stop.setAttribute('offset', '0%');
+  stop.setAttribute('stop-color', '#555');
+  blackGrad.appendChild(stop);
+  stop = document.createElementNS(NS, 'stop');
+  stop.setAttribute('offset', '100%');
+  stop.setAttribute('stop-color', '#111');
+  blackGrad.appendChild(stop);
+  defs.appendChild(blackGrad);
+
+  const whiteGrad = document.createElementNS(NS, 'radialGradient');
+  whiteGrad.setAttribute('id', 'white-stone');
+  whiteGrad.setAttribute('cx', '35%');
+  whiteGrad.setAttribute('cy', '30%');
+  stop = document.createElementNS(NS, 'stop');
+  stop.setAttribute('offset', '0%');
+  stop.setAttribute('stop-color', '#f8f8f8');
+  whiteGrad.appendChild(stop);
+  stop = document.createElementNS(NS, 'stop');
+  stop.setAttribute('offset', '100%');
+  stop.setAttribute('stop-color', '#bbb');
+  whiteGrad.appendChild(stop);
+  defs.appendChild(whiteGrad);
+
+  svg.insertBefore(defs, svg.firstChild);
+  board.appendChild(svg);
+
+  // Player info
+  document.getElementById('hex-info-black').classList.toggle('you', hc === 0);
+  document.getElementById('hex-info-white').classList.toggle('you', hc === 1);
+  document.getElementById('hex-label-black').textContent = (hc === 0 ? 'You' : 'Bot') + ' (N\u2194S)';
+  document.getElementById('hex-label-white').textContent = (hc === 1 ? 'You' : 'Bot') + ' (W\u2194E)';
+
+  // Feedback
+  const fb = document.getElementById('hex-feedback');
+  if (!gameState.terminated && !gameState.move_succeeded) {
+    fb.textContent = 'Cell was occupied! It has been revealed. Try another cell.';
+  } else {
+    fb.textContent = '';
+  }
+
+  updateGameStatus();
+}
+</script>
