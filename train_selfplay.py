@@ -89,6 +89,25 @@ def make_env_fns(cfg):
     )
 
 
+def resolve_logger_cfg(logger_cfg: DictConfig) -> DictConfig:
+    """Return the concrete logger config selected by Hydra."""
+    if "_target_" in logger_cfg:
+        return logger_cfg
+
+    child_loggers = [
+        value
+        for value in logger_cfg.values()
+        if isinstance(value, DictConfig) and "_target_" in value
+    ]
+    if len(child_loggers) == 1:
+        return child_loggers[0]
+
+    raise ValueError(
+        "Could not resolve logger config. Expected either a top-level '_target_' or "
+        "exactly one nested logger config with '_target_'."
+    )
+
+
 def train(
     cfg: DictConfig,
     env,
@@ -510,7 +529,7 @@ def main(cfg: DictConfig):
         keep_top_k=int(cfg.best_checkpoint_top_k),
     )
     checkpoint = checkpoint_manager.resume_or_start(cfg, env)
-    tracker: Logger = instantiate(cfg.logger, run_id=checkpoint.run_id)
+    tracker: Logger = instantiate(resolve_logger_cfg(cfg.logger), run_id=checkpoint.run_id)
     tracker.log_config(cfg)
 
     try:
