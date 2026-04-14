@@ -4,25 +4,30 @@ Jaxpot is a reinforcement learning framework primarily focused on training for [
 
 ## Installation
 
-Install the project and its dependencies with [uv](https://docs.astral.sh/uv/):
+Jaxpot targets Python 3.12 and is easiest to run with [uv](https://docs.astral.sh/uv/):
 
 ```bash
 uv sync
 ```
 
-## Run training
+All commands below use `uv run ...` so they execute inside the project's managed environment.
 
-Run self-play training with a Hydra experiment config:
+## Quickstart
 
-```bash
-uv run python train_selfplay.py experiment=<game>/<config_name>
-```
-
-The example configs are in `config/experiment/` directory, e.g. for the included Go 9×9 config:
+For a first test, run a built-in config for just a few iterations:
 
 ```bash
-uv run python train_selfplay.py experiment=go_9x9/go_9_config
+uv run python train_selfplay.py experiment=go_9x9/go_9_config env=go/9x9 logger=none total_iters=3
 ```
+
+If you want local visualizations without creating a Weights & Biases account, use TensorBoard instead:
+
+```bash
+uv run python train_selfplay.py experiment=go_9x9/go_9_config env=go/9x9 logger=tensorboard total_iters=3
+uv run tensorboard --logdir outputs
+```
+
+If TensorBoard only shows the `HPARAMS` tab and not `Scalars`, restart TensorBoard after the training run has begun writing event files.
 
 ## Tutorial: Add a new environment and train PPO on it
 
@@ -81,7 +86,7 @@ defaults:
 tags: ["tic_tac_toe"]
 experiment_name: "tic_tac_toe_selfplay"
 
-trainer:f
+trainer:
   batch_size: 1024
   auxiliary_losses: []
   clip_eps: 0.2
@@ -117,14 +122,18 @@ resume_from: null
 From the project root:
 
 ```bash
-python train_selfplay.py experiment=tic_tac_toe/fast
+uv run python train_selfplay.py experiment=tic_tac_toe/fast logger=none
 ```
 
 That's it. You should see PPO self-play iterations printed to the console, and (because `eval: random` is selected) a periodic win-rate against a random opponent. Tic-Tac-Toe is small enough to converge in a few minutes on CPU.
 
-## 5. (Optional) Evaluate a checkpoint
+## 5. Find outputs and checkpoints
 
-Checkpoints are written under the run's output directory. To evaluate one with the standalone script:
+Hydra writes each run under `outputs/...`. Checkpoints are stored in that run directory under `checkpoints/`.
+
+If you want local dashboards, the TensorBoard logger writes to `outputs/.../tensorboard/`.
+
+There is also a standalone evaluation helper:
 
 ```bash
 python scripts/eval_checkpoint.py /path/to/checkpoint --num-envs 1024 --num-steps 16 --seed 42
@@ -138,19 +147,15 @@ config/model/tic_tac_toe_mlp.yaml
 config/experiment/tic_tac_toe/fast.yaml
 ```
 
-To adapt this to a different `pgx` game, copy the three files, change the `_target_` of the env, update `input_dim` / `action_dim` in the model to match the new env's `observation_shape` and `num_actions`, and bump `num_steps`, `selfplay_num_envs`, and `total_iters` for larger games.
-
----
+To adapt this to a different `pgx` game, copy the three files, change the `_target_` of the env, update `obs_shape` / `action_dim` in the model to match the new env's `observation_shape` and `num_actions`, and bump `num_steps`, `selfplay_num_envs`, and `total_iters` for larger games.
 
 ## Documentation
 
-For longer walkthroughs and reference material, see the `[docs/](docs/)` directory:
+For longer walkthroughs and reference material, see [docs/](docs/):
 
-- `[docs/modules.md](docs/modules.md)` — module layout (main loop, evaluators, rollouts, models, trainers, losses).
-- `[docs/custom_env.md](docs/custom_env.md)` — writing a custom `pgx` environment and training on it.
-- `[docs/go_evaluation.md](docs/go_evaluation.md)` — round-robin Gomill + BayesElo workflow for rating Go engines e.gg. KataGo, Pachi, Jaxpot checkpoints.
-
----
+- [docs/modules.md](docs/modules.md) - module layout: main loop, evaluators, rollouts, models, trainers, and losses.
+- [docs/custom_env.md](docs/custom_env.md) - writing a custom `pgx` environment and training on it.
+- [docs/go_evaluation.md](docs/go_evaluation.md) - round-robin Gomill + BayesElo workflow for rating Go engines such as KataGo, Pachi, and Jaxpot checkpoints.
 
 ## License
 
