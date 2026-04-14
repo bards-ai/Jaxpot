@@ -1,3 +1,4 @@
+from datetime import datetime
 from io import StringIO
 
 import pandas as pd
@@ -10,11 +11,13 @@ from jaxpot.loggers.logger import Logger
 class TensorBoardLogger(Logger):
     def __init__(
         self,
-        run_id: str,
+        run_id: str | None = None,
         log_dir: str = "runs",
         run_name: str | None = None,
     ):
         super().__init__(run_id)
+        if self._run_id is None:
+            self._run_id = f"run-{datetime.now().strftime('%Y%m%d_%H-%M-%S')}"
         self._log_dir = log_dir
         self._writer = SummaryWriter(logdir=self._log_dir, comment=run_name)
 
