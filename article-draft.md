@@ -1,10 +1,10 @@
-# Train Self-Play RL Agents Fast 🏎️ With Jaxpot
+# We Built a Poker Bot. Here's the Self-Play Framework We Open-Sourced
 
-In this post you will:
+We got hired to build a poker bot.
 
-1. Train self-play agent with Jaxpot in Colab.
-2. Inspect the training, with W&B.
-3. Reuse this training stack in more demanding imperfect-information game: Dark Hex.
+To get the desired winrate we needed self-play (PPO and AlphaZero style), league training, imperfect-information environments, and the ability to iterate fast without rewriting the training loop.
+
+So we built all of that. Now we're opensourcing the infrastructure as its own library: Jaxpot. This post walks you through it — starting with a notebook you can run right now.
 
 ---
 
@@ -15,21 +15,6 @@ It is built around three practical ideas:
 - **PPO and AlphaZero-style training.** PPO gives you a strong policy-gradient baseline for self-play. AlphaZero-style components are useful when you want search and value-guided planning.
 - **JAX.**  Vectorized rollouts and training, compiled, and run efficiently on accelerators. Pushing the training speed to the hardware limit.
 - **Hydra configs.** Experiments are composed from small config files for the game, model, trainer, evaluator, and logger. Changing the game or training setup requires just changing the config.
-
----
-
-## What Jaxpot Gives You
-
-At a high level, it provides:
-
-- JAX-native environments through `pgx` or custom `pgx.core.Env` implementations.
-- PPO training for policy/value agents.
-- AlphaZero-style components for search-based agents.
-- Self-play rollouts compiled with JAX.
-- League and archive play, so agents can train against older opponents.
-- Evaluators against random agents, baselines, archived policies, and small-game Nash exploitability.
-- Hydra configs for experiments, models, environments, trainers, and loggers.
-- TensorBoard and Weights & Biases logging integrated.
 
 ---
 
@@ -44,7 +29,6 @@ That changes everything. The optimal strategy is not a single fixed policy. A po
 Self-play already helps: the opponent keeps changing, so the policy cannot overfit to a fixed strategy. Entropy scheduling keeps the policy exploring early in training, which matters when the game demands mixed strategies.
 
 On top of that, Jaxpot supports League play. The agent trains against frozen snapshots of itself from earlier in the run, and opponents it struggles against get higher sampling weight. That prevents the policy from "forgetting" how to beat older versions of itself. When the league fills up, surplus opponents move to an archive that can reactivate if the agent starts losing to them again.
-
 
 ---
 
