@@ -1,166 +1,64 @@
 # Train Self-Play RL Agents Fast 🏎️ With Jaxpot
 
-In this post, we will do:
+In this post you will:
 
-1. Run a Tic-Tac-Toe self-play experiment in Colab.
-2. Inspect the learning curves with TensorBoard, with W&B as an optional cloud dashboard.
-3. Turn the same training stack toward a more interesting imperfect-information game: Dark Hex.
-
-The point is not that Tic-Tac-Toe is hard. The point is that after the first run works, we will switch to different game without rewriting the RL system.
-
-This is where [Jaxpot](https://github.com/bards-ai/Jaxpot) gets interesting.
-
-Jaxpot is a JAX-based reinforcement learning framework for 1v1 games. It is built around `pgx`-style environments, Hydra configuration, PPO and AlphaZero-style training components, self-play, league play, baseline evaluation, checkpointing, and experiment logging.
+1. Train self-play agent with Jaxpot in Colab.
+2. Inspect the training, with W&B.
+3. Reuse this training stack in more demanding imperfect-information game: Dark Hex.
 
 ---
 
-## Why Another RL Library?
+## Jaxpot
 
-There are many excellent RL libraries. The reason Jaxpot is worth looking at is more specific: it is designed for fast, reproducible self-play experiments in two-player games.
+It is built around three practical ideas:
 
-Single-agent RL already has enough moving parts. In two-player games, the training target is moving. Your agent is not learning against a fixed dataset or a fixed simulator. It is learning against versions of itself, random opponents, archived policies, heuristic baselines, or known game-theoretic targets.
-
-For imperfect-information games, it gets even spicier. The agent may not see the true state of the game. It sees an information state: its cards, its dice, its own stones, public actions, failed guesses, or revealed cells. Evaluation is also less obvious. "The reward went up" is not always convincing when your opponent is co-evolving with you.
-
-Jaxpot's useful abstraction is this:
-
-```text
-Game environment
-    -> vectorized rollout collection
-    -> advantage / target computation
-    -> PPO or AlphaZero-style training
-    -> evaluators
-    -> checkpoints
-    -> TensorBoard / W&B
-```
-
-The game changes. The training pipeline stays recognizable.
-
-That is a very good trade if you want to explore many games quickly.
+- **PPO and AlphaZero-style training.** PPO gives you a strong policy-gradient baseline for self-play. AlphaZero-style components are useful when you want search and value-guided planning.
+- **JAX.**  Vectorized rollouts and training, compiled, and run efficiently on accelerators. Pushing the training speed to the hardware limit.
+- **Hydra configs.** Experiments are composed from small config files for the game, model, trainer, evaluator, and logger. Changing the game or training setup requires just changing the config.
 
 ---
 
 ## What Jaxpot Gives You
 
-At a high level, Jaxpot provides:
+At a high level, it provides:
 
 - JAX-native environments through `pgx` or custom `pgx.core.Env` implementations.
 - PPO training for policy/value agents.
 - AlphaZero-style components for search-based agents.
 - Self-play rollouts compiled with JAX.
-- League and archive play, so agents can train against older opponents instead of only their latest self.
+- League and archive play, so agents can train against older opponents.
 - Evaluators against random agents, baselines, archived policies, and small-game Nash exploitability.
 - Hydra configs for experiments, models, environments, trainers, and loggers.
-- TensorBoard and Weights & Biases logging.
-- Checkpointing through Orbax.
-
-The configuration system is the quiet hero here. A Jaxpot training run is assembled from small YAML files:
-
-
-| Config                  | Responsibility                                 |
-| ----------------------- | ---------------------------------------------- |
-| `config/env/...`        | Which game environment to use                  |
-| `config/model/...`      | Which neural network architecture to use       |
-| `config/trainer/...`    | Which RL optimizer/trainer to use              |
-| `config/eval/...`       | Which opponents or metrics to evaluate against |
-| `config/experiment/...` | The complete recipe for one run                |
-
-
-That makes the workflow feel closer to running experiments than editing scripts.
+- TensorBoard and Weights & Biases logging integrated.
 
 ---
 
 ## Why It Is A Good Fit For Imperfect-Information Games
 
-Perfect-information games are games like Chess, Go, Connect Four, and standard Hex: both players can see the full game state.
+In perfect information games like Chess, Go, and standard Hex, both players see the full board. The game state is public.
 
-Imperfect-information games hide something. Poker hides cards. Liar's Dice hides dice. Phantom Tic-Tac-Toe hides opponent marks. Dark Hex hides opponent stones unless you collide with them.
+Imperfect-information games split the state into public and private parts. Poker hides cards. Liar's Dice hides dice. Dark Hex hides opponent stones unless you collide with them.
 
-Jaxpot already includes several environments in this direction:
+That changes everything. The optimal strategy is not a single fixed policy. A poker bot that always plays the highest win-rate line becomes predictable and easy to exploit.
 
-- Liar's Dice: private dice plus public bids.
-- Kuhn Poker and Leduc Hold'em: small poker games where exploitability can be measured.
-- Phantom Tic-Tac-Toe: Tic-Tac-Toe with hidden opponent moves.
-- Dark Hex: Hex where you only see your own stones and cells revealed by failed moves.
+Self-play already helps: the opponent keeps changing, so the policy cannot overfit to a fixed strategy. Entropy scheduling keeps the policy exploring early in training, which matters when the game demands mixed strategies.
 
-The architectural pieces that matter for this class of games are:
+On top of that, Jaxpot supports League play. The agent trains against frozen snapshots of itself from earlier in the run, and opponents it struggles against get higher sampling weight. That prevents the policy from "forgetting" how to beat older versions of itself. When the league fills up, surplus opponents move to an archive that can reactivate if the agent starts losing to them again.
 
-- Observations can be player-specific, not just the raw board.
-- Action history can be added when the default observation aliases different information states.
-- Recurrent models can be used when memory matters.
-- Self-play and league play reduce overfitting to a single opponent.
-- Small poker games can be evaluated with Nash exploitability, not just win rate.
-
-This is not magic. You still need to design the environment, choose the observation, and interpret the metrics carefully. But the framework gives you the hooks where those decisions belong.
 
 ---
 
 ## Quick Start: Tic-Tac-Toe In Colab
 
-The fastest way to touch the library is the companion Colab notebook:
+The fastest way to use the library is the companion Colab notebook:
 
 ```text
-notebooks/tic_tac_toe_colab_quickstart.ipynb
+tic_tac_toe_colab_quickstart.ipynb
 ```
 
-In the published repo this notebook should be linked near the top of the README, ideally with an "Open in Colab" badge.
+TODO: In the published repo this notebook should be linked near the top of the README, ideally with an "Open in Colab" badge.
 
-The notebook does four things:
-
-1. Clones Jaxpot.
-2. Installs dependencies with `uv`.
-3. Creates a tiny Tic-Tac-Toe experiment config.
-4. Runs PPO self-play and opens TensorBoard.
-
-The Tic-Tac-Toe environment:
-
-```yaml
-_target_: pgx.tic_tac_toe.TicTacToe
-```
-
-The model config is also small:
-
-```yaml
-_target_: jaxpot.models.architectures.mlp.MLPModel
-hidden_dims: [64, 64]
-```
-
-Jaxpot reads the environment's observation shape and action count at startup, then injects those into the model. That is why the model config does not need to hard-code "3x3 board" or "9 actions".
-
-The experiment config is where the run becomes concrete:
-
-```yaml
-# @package _global_
-
-defaults:
-  - override /logger: tensorboard
-  - override /model: tic_tac_toe_mlp
-  - override /trainer: ppo
-  - override /env: tic_tac_toe/default
-  - override /eval: random
-  - _self_
-
-tags: ["tic_tac_toe", "colab", "quickstart"]
-experiment_name: "tic_tac_toe_colab_quickstart"
-
-trainer:
-  num_epochs: 2
-  batch_size: 1024
-  auxiliary_losses: []
-
-selfplay_num_envs: 1024
-random_num_envs: 512
-league_num_envs: 0
-archive_num_envs: 0
-num_steps: 16
-total_iters: 200
-```
-
-You can notice now why Jaxpot makes sense:
-
-```text
-same training script + different Hydra config = different experiment
-```
+Now switch to the Colab and run your first experiments with Jaxpot!
 
 ---
 
@@ -176,20 +74,11 @@ The dashboard is useful while the run is active, but curves are better for under
 
 ![win rate](public/win rate.png)
 
-The no-account path is TensorBoard:
+Jaxpot supports Weights & Biases. For this article, there is a public project where you can see your training:
 
-```bash
-uv run tensorboard --logdir outputs
+```text
+https://wandb.ai/team-bards-ai/Jaxpot%20Public
 ```
-
-In Colab, the notebook uses:
-
-```python
-%load_ext tensorboard
-%tensorboard --logdir outputs
-```
-
-One small gotcha: if TensorBoard only shows `HPARAMS` and not `Scalars`, restart TensorBoard after the training run has started writing event files. This is not a Jaxpot issue; TensorBoard sometimes needs a fresh process to pick up new scalar data.
 
 The curves worth checking first are:
 
@@ -199,30 +88,6 @@ The curves worth checking first are:
 - KL: are PPO updates staying in a reasonable range?
 - evaluation win rate: is the policy improving against the configured opponent?
 - samples/sec: is the run using your hardware effectively?
-
-If you want a cloud dashboard, Jaxpot also supports Weights & Biases.
-
-For this article, there is a public project:
-
-```text
-https://wandb.ai/team-bards-ai/Jaxpot%20Public
-```
-
-However, W&B currently requires users to be logged in or to provide an API key before uploading runs. Public means anyone can view. It does not mean anonymous readers can always write runs without credentials.
-
-So the practical recommendation is:
-
-- Use TensorBoard as the plug-and-play default.
-- Use W&B when you want a shareable cloud dashboard.
-
-If you are logged in to W&B, the command is:
-
-```bash
-uv run wandb login
-uv run python train_selfplay.py experiment=tic_tac_toe/colab logger=wandb_public
-```
-
-That sends the run to the public Jaxpot project.
 
 ---
 
@@ -433,7 +298,7 @@ The best thing about Jaxpot is not that it hides RL complexity.
 
 It does not.
 
-You still need to understand the game, rewards, observations, evaluation, and compute budget.
+You still need to understand the game, rewards, and compute.
 
 The best thing is that it puts the complexity in the right places.
 
@@ -460,33 +325,3 @@ Can I run the toy problem, understand the result, and then move to the real prob
 ```
 
 Jaxpot is built for that second question.
-
----
-
-## Practical Checklist
-
-If you want to try it:
-
-1. Open the Tic-Tac-Toe Colab notebook.
-2. Run the notebook top to bottom.
-3. Confirm TensorBoard shows scalar curves.
-4. Try the same run with `logger=wandb_public` if you use W&B.
-5. Add the Dark Hex experiment config.
-6. Run `total_iters=10` as a smoke test.
-7. Scale only after the smoke test works.
-
-For a tiny first run:
-
-```bash
-uv run python train_selfplay.py experiment=tic_tac_toe/colab
-```
-
-For the advanced example:
-
-```bash
-uv run python train_selfplay.py experiment=dark_hex/fast total_iters=10
-```
-
-That is enough to get from "I cloned the repo" to "I trained a self-play agent on an imperfect-information game."
-
-The interesting work starts after that.
