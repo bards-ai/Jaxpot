@@ -1,0 +1,2 @@
+_target_: jaxpot.models.architectures.mlp.MLPModel
+hidden_dims: [64, 64]
