@@ -1,0 +1,47 @@
+# @package _global_
+# Liar's Dice with 2 dice — smaller game, more strategic, trains faster
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: liars_dice/2d
+  - override /eval: liars_dice/default
+  - _self_
+
+tags: ["liars_dice", "2dice"]
+experiment_name: "liars_dice_2d"
+
+model:
+  hidden_dims: [256, 128, 64]
+
+trainer:
+  num_epochs: 4
+  batch_size: 4096
+  auxiliary_losses: []
+  clip_eps: 0.2
+  entropy_coeff: 0.01
+  entropy_coeff_start: 0.05
+  entropy_decay_iterations: 3_000
+
+seed: 42
+lr: 3e-4
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 512
+total_iters: 10_000
+grad_accum_steps: 1
+gamma: 0.999
+gae_lambda: 0.95
+
+max_grad_norm: 1.0
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null

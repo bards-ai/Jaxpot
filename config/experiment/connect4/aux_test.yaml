@@ -1,0 +1,46 @@
+# @package _global_
+
+defaults:
+  - override /logger: multi
+  - override /model: connect4/default
+  - override /trainer: ppo
+  - override /loguru: default
+  - override /env: connect4/default
+  - _self_
+
+tags: []
+experiment_name: "Connect4_AuxLoss_Test"
+
+model:
+  predict_game_progress: true
+
+trainer:
+  num_epochs: 2
+  batch_size: 4096
+  auxiliary_losses:
+    - _target_: jaxpot.rl.losses.GameProgressMSELoss
+      coef: 0.5
+      max_steps: 42
+
+seed: 42
+lr: 3e-4
+lr_schedule: "constant"
+lr_end: 1e-5
+lr_warmup_iters: 0
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 4096
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 4096
+base_unit: 256
+num_steps: 256
+total_iters: 1000
+grad_accum_steps: 1
+gamma: 0.999
+gae_lambda: 0.95
+max_grad_norm: 1.0
+save_every: 10000
+keep_last_k: 5
+best_checkpoint_top_k: 5
+resume_from: null

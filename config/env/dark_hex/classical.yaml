@@ -1,0 +1,6 @@
+_target_: jaxpot.env.dark_hex.DarkHex
+num_rows: 3
+num_cols: 3
+observation_cls: default
+abrupt: false
+max_steps: 50

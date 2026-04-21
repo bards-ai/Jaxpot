@@ -1,0 +1,5 @@
+_target_: jaxpot.models.az_net_model.AZNetModel
+num_channels: 128
+num_blocks: 6
+resnet_v2: true
+bn_momentum: 0.9

@@ -1,0 +1,5 @@
+_target_: jaxpot.models.architectures.conv.ConvModel
+action_dim: 1225
+obs_shape: [5, 5, 115]
+conv_channels: [64, 64, 64]
+hidden_dims: [256, 256]

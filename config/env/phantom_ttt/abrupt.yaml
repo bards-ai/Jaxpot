@@ -1,0 +1,4 @@
+_target_: jaxpot.env.phantom_ttt.PhantomTTT
+observation_cls: default
+abrupt: true
+max_steps: 50

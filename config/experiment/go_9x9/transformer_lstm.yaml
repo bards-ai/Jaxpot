@@ -1,0 +1,65 @@
+# @package _global_
+
+defaults:
+  - override /logger: multi
+  - override /model: transformer_lstm
+  - override /trainer: recurrent_ppo
+  - override /loguru: default
+  - override /env: go/9x9
+  - override /eval: go/pgx
+  - _self_
+
+trainer:
+  seq_len: 16
+  num_epochs: 3
+  batch_size: 8192
+  kl_coef: 0.0001
+  clip_value: 1.0
+  clip_eps: 0.2
+  value_coeff: 0.5
+  entropy_coeff: 0.004
+  entropy_coeff_start: 0.03
+  entropy_decay_iterations: 2000
+  auxiliary_losses: []
+
+seed: 42
+lr: 3e-4
+selfplay_num_envs: 1024
+random_num_envs: 1024
+league_num_envs: 2048
+archive_num_envs: 1024
+base_unit: 256
+num_steps: 96
+total_iters: 10_000
+gamma: 0.999
+gae_lambda: 0.95
+grad_accum_steps: 1
+max_grad_norm: 0.5
+use_target_selfplay: false
+env_history_len: 1
+
+seq_len: 16
+
+save_every: 150
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null
+
+# League configuration
+league_max_size: 8
+league_add_every: 40
+league_temp: 1.0
+league_score_alpha: 0.1
+random_warmup_iters: 0
+league_log_every: 100
+
+# Archive configuration
+archive_max_size: 32
+forgotten_eval_every: 500
+forgotten_result_margin: 0.001
+forgotten_min_episodes: 50_000
+
+tags: ["go_9x9", "transformer_lstm"]
+experiment_name: "Go9x9_transformer_lstm"
+
+dump_debug_every: null

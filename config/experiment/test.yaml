@@ -1,0 +1,12 @@
+# @package _global_
+
+defaults:
+  - override /model: bilstm_small
+  - override /env: poker/default
+
+trainer:
+  batch_size: 1024
+grad_accum_steps: 1
+
+tags: ["test"]
+experiment_name: test

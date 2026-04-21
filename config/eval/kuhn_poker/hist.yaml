@@ -1,0 +1,23 @@
+# @package _global_
+eval:
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic
+  - _target_: jaxpot.evaluator.league.ArchivedLeagueEvaluator
+    eval_every: 500
+    num_envs: 4096
+    num_steps: ${num_steps}
+  - _target_: jaxpot.evaluator.nash_exploitability.NashExploitabilityEvaluator
+    eval_every: 50
+    game_name: kuhn_poker
+    action_history_len: ${env_action_history_len}
+    name: nash_exploitability

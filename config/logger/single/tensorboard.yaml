@@ -1,0 +1,4 @@
+_target_: jaxpot.loggers.tensorboard.TensorBoardLogger
+log_dir: ${hydra:runtime.output_dir}/tensorboard
+run_name: ${experiment_name}
+run_id: null

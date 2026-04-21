@@ -1,0 +1,53 @@
+# @package _global_
+# Kuhn Poker v3 — constant high entropy (no decay)
+# Nash equilibrium requires mixing → entropy must stay high
+# Also use smaller clip (0.05) to prevent wild oscillation
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: kuhn_poker/default
+  - override /eval: kuhn_poker/default
+  - _self_
+
+tags: ["kuhn_poker", "paper_v3"]
+experiment_name: "kuhn_poker_v3"
+
+model:
+  hidden_dims: [64, 64, 64]
+  activation: tanh
+
+trainer:
+  num_epochs: 4
+  batch_size: 2048
+  auxiliary_losses: []
+  clip_eps: 0.05
+  clip_value: 10.0
+  value_coeff: 0.5
+  entropy_coeff: 0.1
+  entropy_coeff_start: 0.1
+  entropy_decay_iterations: 1_000_000  # effectively no decay
+  kl_coef: 0.0
+
+seed: 42
+lr: 1e-4
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 4096
+random_num_envs: 2048
+league_num_envs: 4096
+archive_num_envs: 1024
+base_unit: 128
+num_steps: 256
+total_iters: 10_000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 0.5
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null

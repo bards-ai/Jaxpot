@@ -1,0 +1,38 @@
+# @package _global_
+
+defaults:
+  - override /logger: multi
+
+  - override /model: leduc_holdem/simple
+  - override /trainer: ppo
+  - override /loguru: default
+  - override /env: leduc_holdem/default
+  - _self_
+
+trainer:
+  num_epochs: 2
+  batch_size: 1024
+  auxiliary_losses: []
+
+seed: 42
+lr: 3e-4
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 128
+random_num_envs: 128
+league_num_envs: 256
+archive_num_envs: 128
+base_unit: 32
+num_steps: 256
+total_iters: 20_000
+grad_accum_steps: 1
+gamma: 0.999
+gae_lambda: 0.95
+max_grad_norm: 1.0
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null
+
+tags: []
+experiment_name: "LeducHoldem_SelfPlay"

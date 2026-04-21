@@ -1,0 +1,12 @@
+_target_: jaxpot.models.games.poker.bilstm.LSTMBasedPokerModel
+action_dim: 10
+max_history_len: 24
+embed_dim: 64
+hidden_size: 128
+ffn_expansion: 4
+dropout: 0.1
+bidirectional: true
+num_card_layers: 1
+num_history_layers: 1
+enable_equity_head: true
+enable_opp_cards_head: true

@@ -1,0 +1,211 @@
+<style>
+  #board-wrap {
+    position: relative;
+    padding: 16px;
+    background: linear-gradient(145deg, #0055aa, #003d7a);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  #c4-board {
+    display: grid;
+    grid-template-columns: repeat(7, 58px);
+    grid-template-rows: repeat(6, 58px);
+    gap: 6px;
+  }
+
+  .c4-cell {
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.2);
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .c4-cell.empty {
+    background: radial-gradient(circle at 40% 35%, #e8e8e8, #c0c0c0);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  .c4-cell.col-hover {
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15), 0 0 8px rgba(110,231,183,0.5);
+    background: radial-gradient(circle at 40% 35%, #d0fbe8, #a0d8c0);
+  }
+  .c4-cell.p1 {
+    background: radial-gradient(circle at 38% 32%, #ff4444, #cc0000);
+    border-color: #aa0000;
+    box-shadow: 0 2px 6px rgba(200,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+  }
+  .c4-cell.p2 {
+    background: radial-gradient(circle at 38% 32%, #ffee44, #ccaa00);
+    border-color: #aa8800;
+    box-shadow: 0 2px 6px rgba(200,170,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+  }
+
+  /* Column labels */
+  #col-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 58px);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .col-label {
+    text-align: center;
+    font-size: 0.75em;
+    font-weight: 500;
+    color: rgba(255,255,255,0.2);
+    user-select: none;
+  }
+
+  /* Player info */
+  #c4-info {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 14px;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+  .c4-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .c4-player.you { border-color: rgba(110,231,183,0.25); }
+  .c4-dot {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  }
+  .c4-dot.red {
+    background: radial-gradient(circle at 40% 35%, #ff4444, #cc0000);
+    border: 2px solid #aa0000;
+  }
+  .c4-dot.yellow {
+    background: radial-gradient(circle at 40% 35%, #ffee44, #ccaa00);
+    border: 2px solid #aa8800;
+  }
+
+  #c4-instructions {
+    max-width: 440px; margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    font-size: 0.8em; line-height: 1.7; color: #6b6b80;
+  }
+  #c4-instructions h3 { color: #9b9bb0; margin-bottom: 6px; font-size: 1em; font-weight: 600; }
+  #c4-instructions strong { color: #9b9bb0; }
+</style>
+
+<div id="c4-info">
+  <div class="c4-player" id="c4-info-p1">
+    <span class="c4-dot red"></span>
+    <span id="c4-label-p1">Player 1</span>
+  </div>
+  <div class="c4-player" id="c4-info-p2">
+    <span class="c4-dot yellow"></span>
+    <span id="c4-label-p2">Player 2</span>
+  </div>
+</div>
+
+<div id="board-wrap">
+  <div id="col-labels"></div>
+  <div id="c4-board" onmouseleave="clearColHighlight()"></div>
+</div>
+
+<div id="c4-instructions">
+  <h3>How to Play</h3>
+  <p><strong>Goal:</strong> Connect 4 pieces in a row (horizontal, vertical, or diagonal).</p>
+  <p>Click any cell in a column to drop your piece there. You play as <strong>Red</strong> (Player 1), the bot plays <strong>Yellow</strong>.</p>
+</div>
+
+<script>
+let hoveredCol = -1;
+
+function initGame() {
+  buildC4Board();
+}
+
+function buildC4Board() {
+  // Column labels
+  const labels = document.getElementById('col-labels');
+  labels.innerHTML = '';
+  for (let c = 0; c < 7; c++) {
+    const lbl = document.createElement('div');
+    lbl.className = 'col-label';
+    lbl.textContent = c;
+    labels.appendChild(lbl);
+  }
+
+  // Board cells
+  const board = document.getElementById('c4-board');
+  board.innerHTML = '';
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 7; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'c4-cell empty';
+      cell.dataset.row = r;
+      cell.dataset.col = c;
+      cell.onclick = () => c4Drop(c);
+      cell.onmouseenter = () => highlightCol(c);
+      board.appendChild(cell);
+    }
+  }
+}
+
+function renderBoard() {
+  if (!gameState || !gameState.legal_actions) return;
+
+  const board = document.getElementById('c4-board');
+  const cells = board.children;
+  const data = gameState.board;
+  const legalCols = new Set(gameState.legal_actions.map(a => a.col));
+
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 7; c++) {
+      const cell = cells[r * 7 + c];
+      cell.className = 'c4-cell';
+      const val = data[r][c];
+      if (val === 1) cell.classList.add('p1');
+      else if (val === 2) cell.classList.add('p2');
+      else {
+        cell.classList.add('empty');
+      }
+    }
+  }
+
+  // Update player info
+  const hp = gameState.human_player;
+  document.getElementById('c4-info-p1').classList.toggle('you', hp === 0);
+  document.getElementById('c4-info-p2').classList.toggle('you', hp === 1);
+  document.getElementById('c4-label-p1').textContent = hp === 0 ? 'You (Red)' : 'Bot (Red)';
+  document.getElementById('c4-label-p2').textContent = hp === 1 ? 'You (Yellow)' : 'Bot (Yellow)';
+
+  updateGameStatus();
+}
+
+function highlightCol(col) {
+  if (hoveredCol === col) return;
+  hoveredCol = col;
+  const board = document.getElementById('c4-board');
+  const cells = board.children;
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 7; c++) {
+      const cell = cells[r * 7 + c];
+      cell.classList.toggle('col-hover', c === col && cell.classList.contains('empty'));
+    }
+  }
+}
+
+function clearColHighlight() {
+  hoveredCol = -1;
+  const board = document.getElementById('c4-board');
+  board.querySelectorAll('.col-hover').forEach(el => el.classList.remove('col-hover'));
+}
+
+function c4Drop(col) {
+  if (!gameState || gameState.terminated || !gameState.legal_actions) return;
+  const action = gameState.legal_actions.find(a => a.col === col);
+  if (!action) return;
+  makeMove(action.id);
+}
+</script>

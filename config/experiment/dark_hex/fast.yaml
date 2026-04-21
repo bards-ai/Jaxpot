@@ -1,0 +1,63 @@
+# @package _global_
+
+defaults:
+  - override /logger: wandb_public
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: dark_hex/classical
+  - override /eval: random
+  - _self_
+
+tags: ["dark_hex", "imperfect_information", "quickstart"]
+experiment_name: "dark_hex_fast"
+
+trainer:
+  num_epochs: 2
+  batch_size: 1024
+  auxiliary_losses: []
+  clip_eps: 0.2
+  entropy_coeff: 0.01
+  entropy_coeff_start: 0.05
+  entropy_decay_iterations: 500
+
+model:
+  hidden_dims: [128, 128]
+
+seed: 42
+lr: 3e-4
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+
+selfplay_num_envs: 256
+random_num_envs: 128
+league_num_envs: 0
+archive_num_envs: 0
+random_warmup_iters: 0
+league_add_every: 0
+base_unit: 64
+num_steps: 32
+total_iters: 10
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 1.0
+save_every: 100
+keep_last_k: 3
+best_checkpoint_top_k: 3
+resume_from: null
+
+eval:
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 1024
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 1024
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic

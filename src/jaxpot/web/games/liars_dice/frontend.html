@@ -1,0 +1,298 @@
+<style>
+  #ld-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Dice display */
+  .ld-dice-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .ld-die {
+    width: 48px;
+    height: 48px;
+    background: #2a2845;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #e8e0d4;
+  }
+  .ld-die.wild { color: #fcd34d; }
+  .ld-die.hidden {
+    background: #1e1b30;
+    color: rgba(255,255,255,0.15);
+  }
+
+  .ld-dice-label {
+    font-size: 0.8em;
+    color: #6b6b80;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-width: 50px;
+  }
+
+  /* Board wrap */
+  #board-wrap {
+    padding: 20px 24px;
+    background: linear-gradient(145deg, #1e1b2e, #161425);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 380px;
+  }
+
+  /* Current bid */
+  #ld-bid-display {
+    text-align: center;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  #ld-bid-display .bid-label {
+    font-size: 0.75em;
+    color: #6b6b80;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  #ld-bid-display .bid-value {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #e8e0d4;
+  }
+
+  /* Bid action grid */
+  #ld-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  #ld-actions .action-label {
+    font-size: 0.75em;
+    color: #6b6b80;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  #ld-bid-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+  .ld-bid-btn {
+    padding: 6px 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    color: #8b8b9e;
+    font-family: inherit;
+    font-size: 0.7em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .ld-bid-btn:hover:not(:disabled) {
+    border-color: rgba(110,231,183,0.4);
+    color: #6ee7b7;
+    background: rgba(110,231,183,0.08);
+  }
+  .ld-bid-btn:disabled {
+    opacity: 0.15;
+    cursor: default;
+  }
+  .ld-bid-btn.liar {
+    grid-column: 1 / -1;
+    padding: 10px;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #fca5a5;
+    border-color: rgba(252,165,165,0.25);
+    background: rgba(252,165,165,0.06);
+  }
+  .ld-bid-btn.liar:hover:not(:disabled) {
+    color: #fca5a5;
+    border-color: rgba(252,165,165,0.5);
+    background: rgba(252,165,165,0.15);
+  }
+
+  /* Revealed dice on game end */
+  #ld-reveal {
+    text-align: center;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  #ld-reveal .reveal-label {
+    font-size: 0.75em;
+    color: #6b6b80;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  #ld-instructions {
+    max-width: 440px;
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    font-size: 0.8em;
+    line-height: 1.7;
+    color: #6b6b80;
+  }
+  #ld-instructions h3 { color: #9b9bb0; margin-bottom: 6px; font-size: 1em; font-weight: 600; }
+  #ld-instructions strong { color: #9b9bb0; }
+</style>
+
+<div id="ld-wrap">
+  <div id="board-wrap">
+    <div class="ld-dice-row">
+      <span class="ld-dice-label">You</span>
+      <div id="ld-my-dice" style="display: flex; gap: 6px;"></div>
+    </div>
+    <div class="ld-dice-row">
+      <span class="ld-dice-label">Bot</span>
+      <div id="ld-opp-dice" style="display: flex; gap: 6px;"></div>
+    </div>
+
+    <div id="ld-bid-display">
+      <div class="bid-label">Current Bid</div>
+      <div class="bid-value" id="ld-current-bid">No bids yet</div>
+    </div>
+
+    <div id="ld-actions">
+      <div class="action-label">Your Bid</div>
+      <div id="ld-bid-grid"></div>
+    </div>
+
+    <div id="ld-reveal" style="display: none;">
+      <div class="reveal-label">Dice Revealed</div>
+      <div id="ld-reveal-dice"></div>
+    </div>
+  </div>
+</div>
+
+<div id="ld-instructions">
+  <h3>How to Play</h3>
+  <p><strong>Liar's Dice:</strong> Each player rolls 5 dice privately.
+     Take turns bidding on total count of a face value across all dice.</p>
+  <p>Bids must increase. Face <strong style="color: #fcd34d;">6 is wild</strong>
+     (counts as any face).</p>
+  <p>Call <strong style="color: #fca5a5;">Liar!</strong> to challenge the last bid.
+     If the bid was correct, the bidder wins. Otherwise, the challenger wins.</p>
+</div>
+
+<script>
+function initGame() {}
+
+function renderDice(container, dice, hidden) {
+  container.innerHTML = '';
+  const count = dice ? dice.length : (gameState ? gameState.num_dice : 5);
+  for (let i = 0; i < count; i++) {
+    const die = document.createElement('div');
+    die.className = 'ld-die';
+    if (hidden) {
+      die.classList.add('hidden');
+      die.textContent = '?';
+    } else {
+      const val = dice[i];
+      die.textContent = val;
+      if (val === 6) die.classList.add('wild');
+    }
+    container.appendChild(die);
+  }
+}
+
+function renderBoard() {
+  if (!gameState) return;
+
+  // My dice
+  renderDice(document.getElementById('ld-my-dice'), gameState.human_dice, false);
+
+  // Opponent dice
+  if (gameState.all_dice) {
+    const oppColor = 1 - gameState.human_color;
+    renderDice(document.getElementById('ld-opp-dice'), gameState.all_dice[oppColor], false);
+  } else {
+    renderDice(document.getElementById('ld-opp-dice'), null, true);
+  }
+
+  // Current bid
+  const bidEl = document.getElementById('ld-current-bid');
+  if (gameState.current_bid) {
+    const who = gameState.current_bid.by_human ? 'You' : 'Bot';
+    bidEl.textContent = gameState.current_bid.text + ' (' + who + ')';
+  } else {
+    bidEl.textContent = 'No bids yet';
+  }
+
+  // Bid buttons
+  const grid = document.getElementById('ld-bid-grid');
+  grid.innerHTML = '';
+
+  if (!gameState.terminated) {
+    const legalSet = new Set(gameState.legal_actions.map(a => a.id));
+    const totalDice = gameState.num_dice * 2;
+    const numBids = totalDice * 6;
+    const liarId = numBids;
+
+    // Bid buttons in grid (quantity x face)
+    for (let q = 1; q <= totalDice; q++) {
+      for (let f = 1; f <= 6; f++) {
+        const id = (q - 1) * 6 + (f - 1);
+        const btn = document.createElement('button');
+        btn.className = 'ld-bid-btn';
+        btn.textContent = q + 'x' + f;
+        btn.disabled = !legalSet.has(id);
+        btn.onclick = () => makeMove(id);
+        grid.appendChild(btn);
+      }
+    }
+
+    // Liar button
+    if (legalSet.has(liarId)) {
+      const btn = document.createElement('button');
+      btn.className = 'ld-bid-btn liar';
+      btn.textContent = 'LIAR!';
+      btn.onclick = () => makeMove(liarId);
+      grid.appendChild(btn);
+    }
+  }
+
+  // Reveal section
+  const revealEl = document.getElementById('ld-reveal');
+  if (gameState.terminated && gameState.all_dice) {
+    revealEl.style.display = '';
+    const revealDice = document.getElementById('ld-reveal-dice');
+    revealDice.innerHTML = '<div style="display: flex; gap: 20px; justify-content: center; margin-top: 8px;">' +
+      '<div><div style="font-size: 0.8em; color: #8b8b9e; margin-bottom: 4px;">You</div><div class="ld-dice-row" id="ld-reveal-you"></div></div>' +
+      '<div><div style="font-size: 0.8em; color: #8b8b9e; margin-bottom: 4px;">Bot</div><div class="ld-dice-row" id="ld-reveal-bot"></div></div>' +
+      '</div>';
+    const hc = gameState.human_color;
+    renderDice(document.getElementById('ld-reveal-you'), gameState.all_dice[hc], false);
+    renderDice(document.getElementById('ld-reveal-bot'), gameState.all_dice[1 - hc], false);
+  } else {
+    revealEl.style.display = 'none';
+  }
+
+  document.getElementById('ld-actions').style.display = gameState.terminated ? 'none' : '';
+
+  updateGameStatus();
+}
+</script>

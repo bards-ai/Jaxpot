@@ -1,0 +1,26 @@
+# @package _global_
+eval:
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    name: liars_dice_baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.liars_dice.baseline.LiarsDiceBaseline
+      num_dice: ${env.num_dice}
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic
+  - _target_: jaxpot.evaluator.league.ArchivedLeagueEvaluator
+    eval_every: 500
+    num_envs: 4096
+    num_steps: ${num_steps}

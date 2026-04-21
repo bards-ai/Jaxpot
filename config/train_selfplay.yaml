@@ -1,0 +1,59 @@
+defaults:
+  - _self_
+  - logger: none
+  - model: mlp
+  - trainer: ppo
+  - train_agent: ppo
+  - advantage_gatherer: gae
+  - loguru: default
+  - env: default
+  - hydra: default
+  - eval: random
+  - experiment: null
+
+seed: 42
+lr: 3e-4
+lr_schedule: "constant"
+lr_end: 1e-5
+lr_warmup_iters: 0
+multi_gpu: false
+collect_aux_targets: true
+selfplay_num_envs: 6144 # 25%
+random_num_envs: 6144 # 25% warmup only
+league_num_envs: 12288 # 50%
+archive_num_envs: 6144 # 25%
+base_unit: 256
+num_steps: 24
+total_iters: 75_000
+grad_accum_steps: 1
+use_target_selfplay: true
+target_tau: 0.002
+target_update_freq: 1
+
+save_every: 100
+keep_last_k: 5
+milestone_every: 1000
+best_checkpoint_top_k: 8
+resume_from: null
+
+# League configuration
+league_max_size: 8
+league_add_every: 500
+league_temp: 0.6
+league_score_alpha: 0.1
+# Warmup: play only vs random for this many iters before starting league
+random_warmup_iters: 200
+# League logging cadence
+league_log_every: 10
+
+# Archive configuration and evaluation-based promotion
+archive_max_size: 32
+forgotten_result_margin: 0.008
+
+seq_len: 1
+
+tags: []
+experiment_name: "default"
+
+dump_debug_every: false
+log_to_file: "output.jsonl" # Set to filename (e.g. "output.jsonl") for JSON-lines log

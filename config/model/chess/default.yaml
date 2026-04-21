@@ -1,0 +1,4 @@
+_target_: jaxpot.models.architectures.mlp.MLPModel
+action_dim: 1225 # Gardner chess (5x5 board)
+input_dim: 2875 # 5*5*115
+hidden_dims: [256, 256]

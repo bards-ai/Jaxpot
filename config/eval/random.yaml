@@ -1,0 +1,14 @@
+# @package _global_
+eval:
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 50
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic

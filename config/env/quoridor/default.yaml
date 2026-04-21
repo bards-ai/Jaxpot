@@ -1,0 +1,4 @@
+_target_: jaxpot.env.quoridor.Quoridor
+observation_cls: default
+speed_reward_scale: 0.0
+max_steps: 200

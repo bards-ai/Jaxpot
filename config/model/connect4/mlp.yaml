@@ -1,0 +1,4 @@
+_target_: jaxpot.models.architectures.mlp.MLPModel
+action_dim: 7
+input_dim: 84 # 6*7*2 for Connect4
+hidden_dims: [256, 128, 64]

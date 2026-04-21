@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+
+# Tool caches
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+logs/
+logs/*.txt
+*.ckpt
+*.npz
+*.tmp
+*.log
+.claude/
+.streamlit/
+checkpoints/
+wandb/
+.env
+
+outputs/

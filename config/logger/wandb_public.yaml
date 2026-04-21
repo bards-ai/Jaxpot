@@ -1,0 +1,8 @@
+defaults:
+  - _self_
+  - single/wandb_public@logger_configs.wandb_public
+
+_target_: jaxpot.loggers.multi.MultiLogger
+_recursive_: false
+logger_configs: {}
+run_id: null

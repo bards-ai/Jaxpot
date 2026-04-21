@@ -1,0 +1,4 @@
+_target_: jaxpot.models.architectures.mlp.MLPModel
+action_dim: 3
+input_dim: 34
+hidden_dims: [512, 512]

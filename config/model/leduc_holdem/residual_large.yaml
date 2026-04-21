@@ -1,0 +1,6 @@
+_target_: jaxpot.models.architectures.residual_mlp.ResidualMLPModel
+action_dim: 3
+obs_shape: 34
+hidden_dim: 512
+num_blocks: 6
+value_hidden_dim: 256

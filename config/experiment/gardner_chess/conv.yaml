@@ -1,0 +1,8 @@
+# @package _global_
+
+defaults:
+  - default
+  - override /model: chess/conv
+  - _self_
+
+experiment_name: "Chess_SelfPlay_Conv"
