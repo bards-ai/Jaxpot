@@ -1,61 +1,67 @@
 # @package _global_
 
+# ---- Base config composition (Hydra defaults) ----
 defaults:
-  - override /logger: wandb_public
-  - override /model: tic_tac_toe_mlp
-  - override /trainer: ppo
-  - override /env: tic_tac_toe/default
-  - override /eval: random
+  - override /logger: wandb_public # Log metrics to a public Weights & Biases project
+  - override /model: tic_tac_toe_mlp # Use the small MLP policy/value network for this game
+  - override /trainer: ppo # Train with PPO (a stable, common RL algorithm)
+  - override /env: tic_tac_toe/default # Load the default Tic-Tac-Toe environment setup
+  - override /eval: random # Start from random-opponent evaluation defaults
   - _self_
 
-tags: ["tic_tac_toe", "colab", "quickstart"]
-experiment_name: "tic_tac_toe_colab_quickstart"
+# ---- Run metadata ----
+tags: ["tic_tac_toe", "colab", "quickstart"] # Helpful labels for tracking runs and filtering dashboards
+experiment_name: "tic_tac_toe_colab_quickstart" # Human-readable run group name
 
+# ---- PPO trainer hyperparameters ----
 trainer:
-  num_epochs: 4
-  batch_size: 2048
+  num_epochs: 4 # PPO updates per batch
+  batch_size: 2048 # Samples per optimization step; larger is smoother but slower
   auxiliary_losses: []
-  clip_eps: 0.2
-  entropy_coeff: 0.001
-  entropy_coeff_start: 0.01
-  entropy_decay_iterations: 1000
+  clip_eps: 0.2 # PPO clipping strength; prevents too-large policy updates
+  entropy_coeff: 0.001 # Final exploration bonus weight (lower = more greedy policy)
+  entropy_coeff_start: 0.01 # Initial exploration bonus; to encourage trying new moves
+  entropy_decay_iterations: 1000 # Number of iterations to decay exploration
 
-seed: 42
-lr: 1e-3
+# ---- Core training setup ----
+seed: 42 # Random seed for reproducibility
+lr: 1e-3 # Learning rate
 lr_schedule: "constant"
-multi_gpu: false
+multi_gpu: false # Use one GPU/CPU process
 use_target_selfplay: false
 
-selfplay_num_envs: 1024
-random_num_envs: 1024
-league_num_envs: 0
-archive_num_envs: 0
-random_warmup_iters: 2000
-league_add_every: 0
-base_unit: 64
-num_steps: 9
-total_iters: 1000
-grad_accum_steps: 1
-gamma: 0.99
+# ---- Environment mix and rollout collection ----
+selfplay_num_envs: 1024 # Parallel games against the current policy
+random_num_envs: 1024 # Parallel games against random opponents for grounding
+league_num_envs: 0 # No league opponents in this quickstart
+archive_num_envs: 0 # No archived past policies sampled as opponents
+random_warmup_iters: 2000 # Keep random-opponent mix for early stability
+league_add_every: 0 # Never add models to a league (league disabled here)
+base_unit: 64 # allocation chunk size for batched rollouts
+num_steps: 9 # Rollout length per game (Tic-Tac-Toe max moves is 9)
+total_iters: 1000 # Total train iterations (main training length)
+grad_accum_steps: 1 # Gradient accumulation. Here: update every batch directly
+gamma: 0.99 # Reward discount factor (how much future rewards matter)
 gae_lambda: 0.95
 
-max_grad_norm: 1.0
-save_every: 500
-keep_last_k: 3
-best_checkpoint_top_k: 3
-resume_from: null
+# ---- Stability and checkpointing ----
+max_grad_norm: 1.0 # Gradient clipping limit to prevent unstable spikes
+save_every: 500 # Save checkpoints every N iterations
+keep_last_k: 3 # Keep only the latest 3 checkpoints to save disk
+best_checkpoint_top_k: 3 # Also keep top 3 best-scoring checkpoints
+resume_from: null # Start fresh; set a checkpoint path here to continue training
 
-# Faster evaluation for a tutorial notebook.
+# ---- Evaluation (faster settings for tutorial) ----
 eval:
   - _target_: jaxpot.evaluator.random.RandomEvaluator
-    eval_every: 250
-    num_envs: 8192
-    num_steps: ${num_steps}
-    deterministic: false
-    name: eval_vs_random
+    eval_every: 250 # Run evaluation every 250 train iterations
+    num_envs: 8192 # number of parallel envs
+    num_steps: ${num_steps} # Use the same episode length as training
+    deterministic: false # Sample actions stochastically during eval
+    name: eval_vs_random # Metric name
   - _target_: jaxpot.evaluator.random.RandomEvaluator
-    eval_every: 250
+    eval_every: 250 
     num_envs: 8192
     num_steps: ${num_steps}
-    deterministic: true
+    deterministic: true # Always take argmax action (no sampling noise)
     name: eval_vs_random_deterministic
