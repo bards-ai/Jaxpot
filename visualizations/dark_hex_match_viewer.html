@@ -1,0 +1,1665 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dark Hex Checkpoint Replay</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171717;
+      --muted: #6f7177;
+      --line: rgba(20, 20, 20, 0.12);
+      --panel: rgba(255, 255, 255, 0.82);
+      --black: #18191b;
+      --pink: #dc198c;
+      --pink-soft: #ff6abd;
+      --teal: #dc198c;
+      --amber: #ff6abd;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(120, 109, 91, 0.14)),
+        #e9e5dc;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(23, 23, 23, 0.032) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(23, 23, 23, 0.026) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, transparent, black 12%, black 84%, transparent);
+      z-index: 1;
+    }
+
+    #scene {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      z-index: 2;
+      width: min(920px, calc(100vw - 32px));
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 60px rgba(32, 28, 20, 0.16);
+    }
+
+    .title {
+      min-width: 0;
+      padding: 0 6px;
+      font-weight: 760;
+      letter-spacing: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .subtitle {
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 520;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    select,
+    button {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    select {
+      min-width: 180px;
+      padding: 0 34px 0 10px;
+    }
+
+    button {
+      width: 42px;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    button:hover,
+    select:hover {
+      border-color: rgba(28, 143, 132, 0.45);
+    }
+
+    .side {
+      position: fixed;
+      right: 18px;
+      top: 90px;
+      z-index: 2;
+      width: min(330px, calc(100vw - 36px));
+      display: grid;
+      gap: 10px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 42px rgba(32, 28, 20, 0.13);
+      padding: 12px;
+    }
+
+    .panel.primary {
+      border-color: rgba(28, 143, 132, 0.28);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 760;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .value {
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid rgba(20, 20, 20, 0.08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 12px;
+      font-weight: 680;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      border: 1px solid rgba(20, 20, 20, 0.22);
+    }
+
+    .dot.black { background: radial-gradient(circle at 35% 30%, #555, #111 72%); }
+    .dot.white { background: radial-gradient(circle at 35% 30%, #ff8ecb, #dc198c 70%, #8f0f5a); }
+
+    .edge-block {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(20, 20, 20, 0.08);
+    }
+
+    .edge-meter {
+      position: relative;
+      height: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, rgba(23, 23, 23, 0.16), rgba(255, 255, 255, 0.74));
+      border: 1px solid rgba(20, 20, 20, 0.1);
+    }
+
+    .edge-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      background: var(--teal);
+      box-shadow: 0 0 18px rgba(28, 143, 132, 0.55);
+      transition: left 220ms ease, width 220ms ease, background 220ms ease;
+    }
+
+    .edge-mid {
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      left: calc(50% - 1px);
+      width: 2px;
+      background: rgba(23, 23, 23, 0.42);
+    }
+
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 720;
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .segmented button {
+      width: auto;
+      height: 30px;
+      border: 0;
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .segmented button.active {
+      background: #171717;
+      color: white;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--teal);
+    }
+
+    .move-list {
+      max-height: min(38vh, 360px);
+      overflow: auto;
+      display: grid;
+      gap: 6px;
+      padding-right: 2px;
+    }
+
+    .move {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid rgba(20, 20, 20, 0.08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.4);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .move.active {
+      border-color: rgba(28, 143, 132, 0.65);
+      background: rgba(28, 143, 132, 0.13);
+    }
+
+    .move.failed {
+      border-color: rgba(199, 139, 34, 0.45);
+    }
+
+    .move-actor {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 720;
+    }
+
+    .move-meta {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .move-value {
+      color: var(--teal);
+      font-weight: 760;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(23, 23, 23, 0.9);
+      color: white;
+      font-weight: 760;
+    }
+
+    .hint {
+      position: fixed;
+      left: 18px;
+      bottom: 16px;
+      z-index: 2;
+      max-width: min(460px, calc(100vw - 36px));
+      color: rgba(23, 23, 23, 0.58);
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 10px 12px;
+      border: 1px solid rgba(20, 20, 20, 0.08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.56);
+      backdrop-filter: blur(14px);
+    }
+
+    .thinking-badge {
+      position: fixed;
+      left: 18px;
+      top: 92px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid rgba(220, 25, 140, 0.28);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 14px 42px rgba(32, 28, 20, 0.13);
+      color: #171717;
+      font-size: 12px;
+      font-weight: 780;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .thinking-badge.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .thinking-pulse {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(220, 25, 140, 0.2);
+    }
+
+    .thinking-pulse::before,
+    .thinking-pulse::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: inherit;
+      background: #dc198c;
+      animation: thinkPulse 900ms ease-in-out infinite alternate;
+    }
+
+    .thinking-pulse::after {
+      inset: -2px;
+      background: transparent;
+      border: 2px solid rgba(220, 25, 140, 0.45);
+      animation-delay: 160ms;
+    }
+
+    @keyframes thinkPulse {
+      from { transform: scale(0.72); opacity: 0.48; }
+      to { transform: scale(1.08); opacity: 1; }
+    }
+
+    .end-screen {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 4;
+      width: min(440px, calc(100vw - 40px));
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      background: rgba(23, 23, 23, 0.86);
+      color: white;
+      box-shadow: 0 30px 100px rgba(20, 16, 9, 0.42);
+      transform: translate(-50%, -46%) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms ease, transform 240ms ease;
+    }
+
+    .end-screen.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .end-kicker {
+      color: #b7dcd6;
+      font-size: 12px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .end-title {
+      margin-top: 6px;
+      font-size: clamp(30px, 7vw, 52px);
+      line-height: 0.95;
+      font-weight: 860;
+    }
+
+    .end-detail {
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .end-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .end-actions button {
+      width: auto;
+      flex: 1;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .end-actions button.primary-action {
+      color: #171717;
+      background: #f5f2e9;
+    }
+
+    @media (max-width: 780px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+      }
+
+      .topbar select {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+
+      .side {
+        left: 12px;
+        right: 12px;
+        top: auto;
+        bottom: 12px;
+        width: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .move-list {
+        max-height: 170px;
+      }
+
+      .hint {
+        display: none;
+      }
+
+      .thinking-badge {
+        left: 12px;
+        top: 128px;
+      }
+
+      .end-screen {
+        top: 40%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div class="topbar">
+    <div>
+      <div class="title" id="title">Dark Hex Checkpoint Replay</div>
+      <div class="subtitle" id="subtitle">Loading recorded games...</div>
+    </div>
+    <select id="gameSelect" aria-label="Game"></select>
+    <button id="playPause" title="Play or pause replay" aria-label="Play">▶</button>
+  </div>
+
+  <aside class="side">
+    <section class="panel primary">
+      <div class="row">
+        <div class="label">Move</div>
+        <div class="value" id="moveValue">0 / 0</div>
+      </div>
+      <input id="moveRange" type="range" min="0" max="0" value="0" aria-label="Move">
+      <div class="row">
+        <div class="label">Result</div>
+        <div class="value" id="resultValue">Pending</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="dot black"></span><span id="blackLabel">Black</span></div>
+        <div class="legend-item"><span class="dot white"></span><span id="whiteLabel">Pink</span></div>
+      </div>
+      <div class="edge-block">
+        <div class="row">
+          <div class="label">Model Edge</div>
+          <div class="value" id="edgeValue">0.00</div>
+        </div>
+        <div class="edge-meter" aria-hidden="true">
+          <div class="edge-fill" id="edgeFill"></div>
+          <div class="edge-mid"></div>
+        </div>
+        <div class="meter-labels">
+          <span>Pink edge</span>
+          <span>Black edge</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel controls">
+      <div class="row">
+        <div class="label">View</div>
+        <div class="value" id="viewValue">True board</div>
+      </div>
+      <div class="segmented" id="viewMode">
+        <button data-view="true">True</button>
+        <button data-view="black">Black</button>
+        <button data-view="white">Pink</button>
+        <button data-view="policy" class="active">Policy</button>
+      </div>
+      <div class="row">
+        <div class="label">Speed</div>
+        <div class="value"><span id="speedValue">1.0</span>x</div>
+      </div>
+      <input id="speedRange" type="range" min="0.25" max="2.5" step="0.25" value="1" aria-label="Speed">
+    </section>
+
+    <section class="panel">
+      <div class="move-list" id="moveList"></div>
+    </section>
+  </aside>
+  <div class="hint">
+    Drag to orbit the board, scroll to zoom. True mode shows the full board; Black and Pink modes show partial information; Policy mode shows the next actor's normalized logit surface before that move is played.
+  </div>
+
+  <div class="thinking-badge" id="thinkingBadge">
+    <span class="thinking-pulse"></span>
+    <span>Pink model thinking</span>
+  </div>
+
+  <div class="end-screen" id="endScreen">
+    <div class="end-kicker" id="endKicker">Game over</div>
+    <div class="end-title" id="endTitle">Black wins</div>
+    <div class="end-detail" id="endDetail">The connection is complete.</div>
+    <div class="end-actions">
+      <button class="primary-action" id="replayButton">Replay</button>
+      <button id="nextGameButton">Next Game</button>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.161.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js";
+
+    const canvas = document.getElementById("scene");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xe9e5dc);
+    scene.fog = new THREE.Fog(0xe9e5dc, 14, 32);
+
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+    camera.position.set(4.9, 5.3, 6.8);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(1.6, 0.2, 1.15);
+    controls.maxPolarAngle = Math.PI * 0.47;
+    controls.minDistance = 3.8;
+    controls.maxDistance = 13;
+
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x9d8f78, 2.2));
+    const sun = new THREE.DirectionalLight(0xfff2d6, 3.2);
+    sun.position.set(-4, 7, 5);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    scene.add(sun);
+
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(36, 36),
+      new THREE.MeshStandardMaterial({ color: 0xe2ded4, roughness: 0.78 })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -0.19;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    const boardGroup = new THREE.Group();
+    const dynamicGroup = new THREE.Group();
+    const labelGroup = new THREE.Group();
+    scene.add(boardGroup, dynamicGroup, labelGroup);
+
+    const materials = {
+      cell: new THREE.MeshStandardMaterial({ color: 0x5c566a, roughness: 0.66, metalness: 0.03 }),
+      cellOutline: new THREE.LineBasicMaterial({ color: 0x322d3c, transparent: true, opacity: 0.34 }),
+      cellUnknown: new THREE.MeshStandardMaterial({ color: 0x7a7483, roughness: 0.72, metalness: 0.02, transparent: true, opacity: 0.68 }),
+      cellHighlight: new THREE.MeshStandardMaterial({ color: 0xdc198c, roughness: 0.5, emissive: 0x5f0c3a, emissiveIntensity: 0.38 }),
+      black: new THREE.MeshStandardMaterial({ color: 0x111214, roughness: 0.33, metalness: 0.12 }),
+      white: new THREE.MeshStandardMaterial({ color: 0xdc198c, roughness: 0.31, metalness: 0.1, emissive: 0x3c0624, emissiveIntensity: 0.08 }),
+      failed: new THREE.MeshStandardMaterial({ color: 0xff6abd, roughness: 0.55, emissive: 0x7d124e, emissiveIntensity: 0.42, transparent: true, opacity: 0.54 }),
+      blackEdge: new THREE.MeshStandardMaterial({ color: 0x111214, roughness: 0.62 }),
+      whiteEdge: new THREE.MeshStandardMaterial({ color: 0xdc198c, roughness: 0.58, emissive: 0x3c0624, emissiveIntensity: 0.08 }),
+      blackEdgeOutline: new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.42 }),
+      whiteEdgeOutline: new THREE.LineBasicMaterial({ color: 0x6f063f, transparent: true, opacity: 0.42 }),
+      ghostBlack: new THREE.MeshStandardMaterial({ color: 0x111214, roughness: 0.31, metalness: 0.08, transparent: true, opacity: 0.28 }),
+      ghostPink: new THREE.MeshStandardMaterial({ color: 0xdc198c, roughness: 0.31, metalness: 0.08, transparent: true, opacity: 0.34, emissive: 0x3c0624, emissiveIntensity: 0.08 }),
+    };
+
+    const cellMeshes = [];
+    const cellPositions = [];
+    const radius = 0.54;
+    const height = 0.18;
+    const DEFAULT_TURN_MS = 900;
+    const PINK_THINKING_TURN_MS = 4300;
+    const BLACK_PLACEMENT_RING_DELAY_MS = 640;
+    const BLACK_PLACEMENT_THINKING_DELAY_MS = 1500;
+    const COMMIT_RING_REVEAL_MS = 1700;
+    const GHOST_STAGGER_MS = 150;
+    const GHOST_REVEAL_MS = 620;
+    const SCORE_REVEAL_DELAY_MS = 860;
+    const SCORE_STAGGER_MS = 110;
+    const SCORE_REVEAL_MS = 560;
+    const CHOSEN_PEDESTAL_DELAY_MS = 1640;
+    const CHOSEN_PEDESTAL_REVEAL_MS = 560;
+    let data;
+    let game;
+    let moveIndex = 0;
+    let playing = false;
+    let speed = 1;
+    let view = "policy";
+    let lastTick = 0;
+    let transitionStart = 0;
+    let lastRenderedMoveIndex = -1;
+    let boardSize = 5;
+
+    const els = {
+      title: document.getElementById("title"),
+      subtitle: document.getElementById("subtitle"),
+      gameSelect: document.getElementById("gameSelect"),
+      playPause: document.getElementById("playPause"),
+      moveRange: document.getElementById("moveRange"),
+      moveValue: document.getElementById("moveValue"),
+      resultValue: document.getElementById("resultValue"),
+      blackLabel: document.getElementById("blackLabel"),
+      whiteLabel: document.getElementById("whiteLabel"),
+      edgeValue: document.getElementById("edgeValue"),
+      edgeFill: document.getElementById("edgeFill"),
+      viewValue: document.getElementById("viewValue"),
+      viewMode: document.getElementById("viewMode"),
+      speedRange: document.getElementById("speedRange"),
+      speedValue: document.getElementById("speedValue"),
+      moveList: document.getElementById("moveList"),
+      endScreen: document.getElementById("endScreen"),
+      endKicker: document.getElementById("endKicker"),
+      endTitle: document.getElementById("endTitle"),
+      endDetail: document.getElementById("endDetail"),
+      replayButton: document.getElementById("replayButton"),
+      nextGameButton: document.getElementById("nextGameButton"),
+      thinkingBadge: document.getElementById("thinkingBadge"),
+    };
+
+    function hexPosition(row, col) {
+      const spacing = radius * 1.04;
+      return {
+        x: Math.sqrt(3) * spacing * (col + row * 0.5),
+        z: 1.5 * spacing * row,
+      };
+    }
+
+    function cellValue(snapshot, index) {
+      if (view === "black") return snapshot.black_view[index];
+      if (view === "white") return snapshot.white_view[index];
+      return snapshot.board[index];
+    }
+
+    function clearGroup(group) {
+      while (group.children.length) {
+        const child = group.children.pop();
+        child.traverse((node) => {
+          if (node.geometry) node.geometry.dispose();
+          if (node.userData?.disposableMaterial && node.material) {
+            if (node.material.map) node.material.map.dispose();
+            node.material.dispose();
+          }
+        });
+      }
+    }
+
+    function buildBoard() {
+      clearGroup(boardGroup);
+      cellMeshes.length = 0;
+      cellPositions.length = 0;
+      const rows = data.num_rows;
+      const cols = data.num_cols;
+      const raw = [];
+      let minX = Infinity;
+      let maxX = -Infinity;
+      let minZ = Infinity;
+      let maxZ = -Infinity;
+
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const { x, z } = hexPosition(row, col);
+          raw.push({ row, col, x, z });
+          minX = Math.min(minX, x);
+          maxX = Math.max(maxX, x);
+          minZ = Math.min(minZ, z);
+          maxZ = Math.max(maxZ, z);
+        }
+      }
+
+      const centerX = (minX + maxX) / 2;
+      const centerZ = (minZ + maxZ) / 2;
+      const width = maxX - minX + radius * 2.2;
+      const depth = maxZ - minZ + radius * 2.2;
+      boardSize = Math.max(width, depth);
+
+      function addHexPedestal(x, z, material, outlineMaterial, y = 0, scale = 1) {
+        const geom = new THREE.CylinderGeometry(radius * scale, radius * scale, height, 6);
+        geom.rotateY(Math.PI / 3);
+        const pedestal = new THREE.Mesh(geom, material);
+        pedestal.position.set(x - centerX, y, z - centerZ);
+        pedestal.receiveShadow = true;
+        pedestal.castShadow = true;
+        boardGroup.add(pedestal);
+
+        const outline = new THREE.LineSegments(new THREE.EdgesGeometry(geom), outlineMaterial);
+        outline.position.copy(pedestal.position);
+        boardGroup.add(outline);
+      }
+
+      raw.forEach(({ row, col, x, z }) => {
+        const px = x - centerX;
+        const pz = z - centerZ;
+        const geom = new THREE.CylinderGeometry(radius, radius, height, 6);
+        geom.rotateY(Math.PI / 3);
+        const cell = new THREE.Mesh(geom, materials.cell);
+        cell.position.set(px, 0, pz);
+        cell.userData = { row, col };
+        cell.receiveShadow = true;
+        cell.castShadow = true;
+        boardGroup.add(cell);
+        const outline = new THREE.LineSegments(
+          new THREE.EdgesGeometry(geom),
+          materials.cellOutline
+        );
+        outline.position.copy(cell.position);
+        boardGroup.add(outline);
+        cellMeshes.push(cell);
+        cellPositions.push({ x: px, z: pz });
+      });
+
+      const boundaryOffset = radius * 1.58;
+      for (let col = 0; col < cols; col += 1) {
+        const topSource = raw[col];
+        const bottomSource = raw[(rows - 1) * cols + col];
+        addHexPedestal(
+          topSource.x - Math.sqrt(3) * radius * 0.52,
+          topSource.z - boundaryOffset,
+          materials.blackEdge,
+          materials.blackEdgeOutline,
+          -0.012,
+          0.92
+        );
+        addHexPedestal(
+          bottomSource.x + Math.sqrt(3) * radius * 0.52,
+          bottomSource.z + boundaryOffset,
+          materials.blackEdge,
+          materials.blackEdgeOutline,
+          -0.012,
+          0.92
+        );
+      }
+
+      for (let row = 0; row < rows; row += 1) {
+        const leftSource = raw[row * cols];
+        const rightSource = raw[row * cols + cols - 1];
+        addHexPedestal(
+          leftSource.x - Math.sqrt(3) * radius * 1.08,
+          leftSource.z,
+          materials.whiteEdge,
+          materials.whiteEdgeOutline,
+          -0.006,
+          0.92
+        );
+        addHexPedestal(
+          rightSource.x + Math.sqrt(3) * radius * 1.08,
+          rightSource.z,
+          materials.whiteEdge,
+          materials.whiteEdgeOutline,
+          -0.006,
+          0.92
+        );
+      }
+
+      camera.position.set(boardSize * 0.45, boardSize * 0.72, boardSize * 1.02);
+      controls.target.set(0, 0.16, 0);
+      controls.minDistance = Math.max(3.4, boardSize * 0.52);
+      controls.maxDistance = Math.max(10, boardSize * 1.8);
+      controls.update();
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function easeOutBack(t) {
+      const c1 = 1.70158;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    }
+
+    function makeStone(value, x, z, lift = 0, pop = false) {
+      const stone = new THREE.Mesh(
+        new THREE.SphereGeometry(0.28, 36, 22),
+        value === 1 ? materials.black : materials.white
+      );
+      stone.position.set(x, 0.3 + lift, z);
+      stone.scale.y = 0.82;
+      stone.castShadow = true;
+      stone.receiveShadow = true;
+      stone.userData = {
+        pop,
+        baseY: 0.3 + lift,
+        baseScale: 1,
+      };
+      if (pop) {
+        stone.position.y += 0.68;
+        stone.scale.setScalar(0.45);
+        stone.scale.y = 0.36;
+      }
+      return stone;
+    }
+
+    function drawTextSpriteCanvas(canvas, ctx, text, options = {}) {
+      const width = canvas.width;
+      const height = canvas.height;
+      const bg = options.bg || "rgba(23, 23, 23, 0.88)";
+      const fg = options.fg || "#ffffff";
+      const accent = options.accent || "#ff6abd";
+      const pulse = options.pulsePhase ? (0.5 + 0.5 * Math.sin(options.pulsePhase)) : 0.5;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = bg;
+      ctx.beginPath();
+      ctx.roundRect(18, 18, width - 36, height - 36, 28);
+      ctx.fill();
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.fillStyle = fg;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "700 36px Inter, sans-serif";
+      if (options.thinkingIcon) {
+        const iconX = 55;
+        const iconY = height / 2;
+        ctx.save();
+        ctx.globalAlpha = 0.18 + 0.24 * pulse;
+        ctx.fillStyle = accent;
+        ctx.beginPath();
+        ctx.arc(iconX, iconY, 15 + pulse * 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.arc(iconX, iconY, 7 + pulse * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.fillText(text, options.thinkingIcon ? width / 2 + 14 : width / 2, height / 2 + 1);
+    }
+
+    function makeTextSprite(text, options = {}) {
+      const width = 256;
+      const height = 112;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      drawTextSpriteCanvas(canvas, ctx, text, options);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const material = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        depthTest: false,
+      });
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(0.92, 0.4, 1);
+      sprite.userData = { disposableMaterial: true, canvas, ctx, texture, textOptions: options };
+      return sprite;
+    }
+
+    function addGhostPrediction(candidate, rank, x, z, color, origin, sequenceDelay = 0) {
+      const score = Math.max(1, Math.round(candidate.visual * 100));
+      const baseMaterial = color === "white" ? materials.ghostPink : materials.ghostBlack;
+      const material = baseMaterial.clone();
+      material.opacity = 0;
+      const ghost = new THREE.Mesh(new THREE.SphereGeometry(0.28, 36, 22), material);
+      const startX = origin?.x ?? x;
+      const startZ = origin?.z ?? z;
+      const y = 0.38 + rank * 0.035;
+      ghost.position.set(startX, y, startZ);
+      ghost.visible = false;
+      const targetScale = 1.04 - rank * 0.08;
+      ghost.scale.setScalar(0.01);
+      ghost.scale.y *= 0.82;
+      ghost.userData = {
+        disposableMaterial: true,
+        ghostPrediction: true,
+        targetOpacity: baseMaterial.opacity,
+        targetScale,
+        start: new THREE.Vector3(startX, y, startZ),
+        end: new THREE.Vector3(x, y, z),
+        selectedPrediction: Boolean(candidate.selected),
+        sequenceDelay,
+        rank,
+      };
+      dynamicGroup.add(ghost);
+
+      if (candidate.selected) {
+        const highlightMaterial = new THREE.MeshBasicMaterial({
+          color: 0xff2aa5,
+          transparent: true,
+          opacity: 0,
+          depthWrite: false,
+          side: THREE.DoubleSide,
+        });
+        const highlightGeometry = new THREE.CylinderGeometry(radius * 0.98, radius * 0.98, 0.032, 6);
+        highlightGeometry.rotateY(Math.PI / 3);
+        const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
+        highlight.position.set(x, 0.112, z);
+        highlight.scale.setScalar(0.9);
+        highlight.visible = false;
+        highlight.userData = {
+          disposableMaterial: true,
+          chosenPedestal: true,
+          sequenceDelay,
+        };
+        dynamicGroup.add(highlight);
+      }
+
+      const isTop = rank === 0;
+      const sprite = makeTextSprite("0%", {
+        bg: isTop ? "rgba(220, 25, 140, 0.88)" : "rgba(17, 18, 20, 0.76)",
+        fg: "#ffffff",
+        accent: isTop ? "#ffffff" : "#ff6abd",
+        thinkingIcon: true,
+      });
+      sprite.scale.set(0.58, 0.26, 1);
+      const scoreY = 0.9 + rank * 0.04;
+      sprite.position.set(startX, scoreY, startZ);
+      sprite.visible = false;
+      sprite.material.opacity = 0;
+      sprite.userData.scoreTag = true;
+      sprite.userData.targetScore = score;
+      sprite.userData.displayScore = -1;
+      sprite.userData.start = new THREE.Vector3(startX, scoreY, startZ);
+      sprite.userData.end = new THREE.Vector3(x, scoreY, z);
+      sprite.userData.sequenceDelay = sequenceDelay;
+      sprite.userData.rank = rank;
+      dynamicGroup.add(sprite);
+    }
+
+    function addCommitConfirmation(x, z, color, delay = 0) {
+      const ringCanvas = document.createElement("canvas");
+      ringCanvas.width = 256;
+      ringCanvas.height = 256;
+      const ctx = ringCanvas.getContext("2d");
+      ctx.clearRect(0, 0, 256, 256);
+      ctx.strokeStyle = color === "white" ? "#ff2aa5" : "#fff8ea";
+      ctx.lineWidth = 16;
+      ctx.shadowColor = color === "white" ? "rgba(255, 42, 165, 0.8)" : "rgba(255, 248, 234, 0.9)";
+      ctx.shadowBlur = 18;
+      ctx.beginPath();
+      ctx.arc(128, 128, 84, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = "rgba(255,255,255,0.52)";
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(128, 128, 101, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const texture = new THREE.CanvasTexture(ringCanvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const material = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        opacity: 0.86,
+        depthTest: false,
+      });
+      const ring = new THREE.Sprite(material);
+      ring.position.set(x, 0.74, z);
+      ring.scale.set(0.7, 0.7, 1);
+      ring.visible = delay === 0;
+      ring.userData = {
+        disposableMaterial: true,
+        commitConfirmation: true,
+        baseScale: 0.7,
+        targetScale: 1.35,
+        delay,
+      };
+      dynamicGroup.add(ring);
+    }
+
+    function addMoveBurst(x, z, color) {
+      const burstColor = color === "white" ? 0xff6abd : 0x111214;
+      for (let i = 0; i < 14; i += 1) {
+        const angle = (i / 14) * Math.PI * 2;
+        const speedOut = 0.28 + (i % 4) * 0.06;
+        const material = new THREE.MeshBasicMaterial({
+          color: burstColor,
+          transparent: true,
+          opacity: 0.72,
+        });
+        const spark = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 8), material);
+        spark.position.set(x, 0.54, z);
+        spark.userData = {
+          disposableMaterial: true,
+          spark: true,
+          start: new THREE.Vector3(x, 0.54, z),
+          velocity: new THREE.Vector3(Math.cos(angle) * speedOut, 0.18 + (i % 3) * 0.035, Math.sin(angle) * speedOut),
+        };
+        dynamicGroup.add(spark);
+      }
+    }
+
+    function animateSceneObjects(now) {
+      const t = clamp((now - transitionStart) / 620, 0, 1);
+      const pop = easeOutBack(t);
+      dynamicGroup.children.forEach((child) => {
+        if (child.userData?.ghostPrediction) {
+          const sequenceDelay = child.userData.sequenceDelay || 0;
+          const delay = sequenceDelay + child.userData.rank * GHOST_STAGGER_MS;
+          const gt = clamp((now - transitionStart - delay) / GHOST_REVEAL_MS, 0, 1);
+          const eased = easeOutBack(gt);
+          child.visible = gt > 0;
+          child.material.opacity = child.userData.targetOpacity * gt;
+          child.scale.setScalar(child.userData.targetScale * Math.max(0.01, eased));
+          child.scale.y *= 0.82;
+          child.position.lerpVectors(child.userData.start, child.userData.end, clamp(eased, 0, 1));
+        }
+        if (child.userData?.scoreTag) {
+          const sequenceDelay = child.userData.sequenceDelay || 0;
+          const delay = sequenceDelay + SCORE_REVEAL_DELAY_MS + child.userData.rank * SCORE_STAGGER_MS;
+          const st = clamp((now - transitionStart - delay) / SCORE_REVEAL_MS, 0, 1);
+          const eased = easeOutBack(st);
+          const shown = Math.round(child.userData.targetScore * st);
+          child.visible = st > 0;
+          child.material.opacity = st;
+          child.scale.set(0.58, 0.26, 1);
+          child.position.lerpVectors(child.userData.start, child.userData.end, clamp(eased, 0, 1));
+          if (shown !== child.userData.displayScore || child.userData.textOptions?.thinkingIcon) {
+            child.userData.displayScore = shown;
+            drawTextSpriteCanvas(
+              child.userData.canvas,
+              child.userData.ctx,
+              `${shown}%`,
+              {
+                ...child.userData.textOptions,
+                pulsePhase: now / 135 + child.userData.rank * 0.7,
+              },
+            );
+            child.userData.texture.needsUpdate = true;
+          }
+        }
+        if (child.userData?.pop) {
+          child.position.y = child.userData.baseY + (1 - t) * 0.62;
+          child.scale.setScalar(0.72 + 0.28 * pop);
+          child.scale.y *= 0.82;
+        }
+        if (child.userData?.spark) {
+          const st = child.userData;
+          child.position.copy(st.start).addScaledVector(st.velocity, t * 2.2);
+          child.position.y -= t * t * 0.28;
+          child.material.opacity = 0.72 * (1 - t);
+        }
+        if (child.userData?.reveal) {
+          child.scale.setScalar(0.75 + 0.35 * Math.sin(t * Math.PI));
+        }
+        if (child.userData?.commitConfirmation) {
+          const delay = child.userData.delay || 0;
+          const ct = clamp((now - transitionStart - delay) / COMMIT_RING_REVEAL_MS, 0, 1);
+          const eased = easeOutBack(ct);
+          child.visible = ct > 0;
+          const scale = child.userData.baseScale + (child.userData.targetScale - child.userData.baseScale) * eased;
+          child.scale.setScalar(scale);
+          child.material.opacity = ct > 0 ? 0.86 * (1 - ct) : 0;
+        }
+        if (child.userData?.chosenPedestal) {
+          const sequenceDelay = child.userData.sequenceDelay || 0;
+          const ct = clamp((now - transitionStart - sequenceDelay - CHOSEN_PEDESTAL_DELAY_MS) / CHOSEN_PEDESTAL_REVEAL_MS, 0, 1);
+          const eased = easeOutBack(ct);
+          const pulse = ct > 0 ? Math.sin(ct * Math.PI) : 0;
+          child.visible = ct > 0;
+          child.scale.setScalar(0.9 + 0.16 * clamp(eased, 0, 1) + 0.04 * pulse);
+          child.material.opacity = ct > 0 ? 0.66 - 0.16 * ct : 0;
+        }
+      });
+    }
+
+    function renderPosition() {
+      if (!game) return;
+      const moveChanged = lastRenderedMoveIndex !== moveIndex;
+      if (moveChanged) {
+        transitionStart = performance.now();
+        lastRenderedMoveIndex = moveIndex;
+      }
+      clearGroup(dynamicGroup);
+
+      const snapshot = game.snapshots[moveIndex] || game.snapshots.at(-1);
+      const lastMove = moveIndex > 0 ? game.moves[moveIndex - 1] : null;
+      const displayedPolicyMove = view === "policy" ? policyDisplayMove() : lastMove;
+      const showPinkThinking = (
+        view === "policy"
+        && displayedPolicyMove?.color === "white"
+        && moveIndex < game.moves.length
+      );
+      const thinkingSequenceDelay = (
+        showPinkThinking
+        && lastMove?.color === "black"
+        && lastMove.move_succeeded
+      ) ? BLACK_PLACEMENT_THINKING_DELAY_MS : 0;
+      const topPolicyCandidates = showPinkThinking ? candidateMoves(displayedPolicyMove, 3, snapshot.board) : [];
+      const policyFanOrigin = topPolicyCandidates[0]
+        ? cellPositions[topPolicyCandidates[0].action]
+        : cellPositions[displayedPolicyMove?.action];
+      const topPolicyByAction = new Map(topPolicyCandidates.map((candidate, rank) => [
+        candidate.action,
+        { ...candidate, rank, selected: candidate.action === displayedPolicyMove.action },
+      ]));
+
+      cellMeshes.forEach((mesh, index) => {
+        const value = cellValue(snapshot, index);
+        const isLastMove = lastMove && lastMove.action === index;
+        const isSelected = view === "policy" ? false : isLastMove;
+        const hidden = view !== "true" && value === 0;
+        mesh.material = isSelected ? materials.cellHighlight : hidden ? materials.cellUnknown : materials.cell;
+
+        if (value === 1 || value === 2) {
+          const suppressThoughtCommitLanding = Boolean(
+            view === "policy"
+            && isLastMove
+            && lastMove?.color === "white"
+            && lastMove.move_succeeded
+          );
+          const pop = Boolean(
+            moveChanged
+            && isLastMove
+            && lastMove?.move_succeeded
+            && !suppressThoughtCommitLanding
+          );
+          const stone = makeStone(value, mesh.position.x, mesh.position.z, isLastMove ? 0.08 : 0, pop);
+          dynamicGroup.add(stone);
+          if (pop) addMoveBurst(mesh.position.x, mesh.position.z, lastMove.color);
+          if (pop) {
+            const ringDelay = (
+              showPinkThinking
+              && lastMove.color === "black"
+              && lastMove.move_succeeded
+            ) ? BLACK_PLACEMENT_RING_DELAY_MS : 0;
+            addCommitConfirmation(mesh.position.x, mesh.position.z, lastMove.color, ringDelay);
+          }
+        }
+
+        const policyCandidate = topPolicyByAction.get(index);
+        if (policyCandidate) {
+          addGhostPrediction(
+            policyCandidate,
+            policyCandidate.rank,
+            mesh.position.x,
+            mesh.position.z,
+            displayedPolicyMove.color,
+            policyFanOrigin,
+            thinkingSequenceDelay
+          );
+        }
+
+        if (isLastMove && !lastMove.move_succeeded) {
+          const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(0.43, 0.035, 10, 48),
+            materials.failed
+          );
+          ring.position.set(mesh.position.x, 0.36, mesh.position.z);
+          ring.rotation.x = Math.PI / 2;
+          ring.userData = { reveal: true };
+          dynamicGroup.add(ring);
+        }
+      });
+
+      updatePanels();
+    }
+
+    function colorOwnerLabel(colorName) {
+      const playerId = game.color_players[colorName];
+      return playerId === 0 ? "latest" : "opponent";
+    }
+
+    function activeValueMove() {
+      if (!game || !game.moves.length) return null;
+      return moveIndex > 0 ? game.moves[moveIndex - 1] : game.moves[0];
+    }
+
+    function nextPolicyMove() {
+      if (!game || !game.moves.length) return null;
+      return game.moves[moveIndex] || null;
+    }
+
+    function policyDisplayMove() {
+      return nextPolicyMove() || (game?.moves?.length ? game.moves.at(-1) : null);
+    }
+
+    function policyVisuals(move) {
+      if (!move?.policy) return null;
+      const logits = move.policy_logits || [];
+      if (logits.length === move.policy.length) {
+        const finite = logits
+          .filter((value) => Number.isFinite(value) && value > -1e8)
+          .sort((a, b) => b - a);
+        if (finite.length) {
+          const max = finite[0];
+          const floor = finite[Math.min(finite.length - 1, 12)];
+          const span = Math.max(0.001, max - floor);
+          return logits.map((value) => (
+            Number.isFinite(value) && value > -1e8
+              ? clamp((value - floor) / span, 0, 1)
+              : 0
+          ));
+        }
+      }
+      return move.policy.map((prob) => Math.sqrt(Math.max(0, prob)));
+    }
+
+    function candidateMoves(move, limit = 3, trueBoard = null) {
+      if (!move?.policy) return [];
+      const logits = move.policy_logits || [];
+      const visuals = policyVisuals(move) || [];
+      const board = trueBoard?.length ? trueBoard : move.before?.board || [];
+      const legal = move.before?.legal_action_mask || [];
+      const sorted = move.policy
+        .map((prob, action) => ({
+          action,
+          prob,
+          logit: Number.isFinite(logits[action]) ? logits[action] : Math.log(Math.max(prob, 1e-12)),
+          visual: visuals[action] ?? Math.sqrt(Math.max(0, prob)),
+          name: actionName(action, data.num_cols),
+        }))
+        .filter((item) => (
+          item.prob > 0
+          && board[item.action] === 0
+          && (!legal.length || Boolean(legal[item.action]))
+        ))
+        .sort((a, b) => b.logit - a.logit);
+      const selected = sorted.find((item) => item.action === move.action);
+      const candidates = sorted.slice(0, limit);
+      if (selected && !candidates.some((item) => item.action === selected.action)) {
+        candidates[candidates.length - 1] = selected;
+      }
+      return candidates;
+    }
+
+    function signed(value) {
+      if (!Number.isFinite(value)) return "0.00";
+      return `${value >= 0 ? "+" : ""}${value.toFixed(2)}`;
+    }
+
+    function updateEdgeMeter(move) {
+      const blackEdge = move?.black_edge_value ?? 0;
+      const pct = clamp(Math.abs(blackEdge), 0, 1) * 50;
+      els.edgeFill.style.width = `${pct}%`;
+      els.edgeFill.style.left = blackEdge >= 0 ? "50%" : `${50 - pct}%`;
+      els.edgeFill.style.background = blackEdge >= 0 ? "var(--black)" : "var(--pink)";
+      els.edgeFill.style.boxShadow = blackEdge >= 0
+        ? "0 0 18px rgba(23, 23, 23, 0.42)"
+        : "0 0 18px rgba(255, 255, 255, 0.62)";
+      const actorValue = move?.value_estimate ?? 0;
+      const actor = move ? `${move.actor} ${move.color}` : "model";
+      els.edgeValue.textContent = `${actor}: ${signed(actorValue)}`;
+    }
+
+    function updateWinScreen() {
+      const result = game.result;
+      const isOver = moveIndex >= game.moves.length && (result.winner_label || result.truncated);
+      els.endScreen.classList.toggle("show", Boolean(isOver));
+      if (!isOver) return;
+
+      const winnerColor = result.winner_color === 0 ? "Black" : result.winner_color === 1 ? "Pink" : "No one";
+      els.endKicker.textContent = result.truncated ? "Truncated" : "Connection complete";
+      els.endTitle.textContent = result.winner_label ? `${winnerColor} wins` : "No winner";
+      els.endDetail.textContent = result.winner_label
+        ? `${result.winner_label} claimed the board in ${result.num_plies} plies.`
+        : `The game stopped after ${result.num_plies} plies.`;
+    }
+
+    function updateThinkingBadge(move) {
+      const showThinking = (
+        view === "policy"
+        && move?.color === "white"
+        && moveIndex < game.moves.length
+      );
+      els.thinkingBadge.classList.toggle("show", Boolean(showThinking));
+    }
+
+    function updatePanels() {
+      const total = game.moves.length;
+      const lastMove = moveIndex > 0 ? game.moves[moveIndex - 1] : null;
+      const valueMove = activeValueMove();
+      const policyMove = policyDisplayMove();
+      const opponent = game.opponent_checkpoint.iteration;
+      els.title.textContent = game.preview
+        ? `${data.num_rows}x${data.num_cols} Dark Hex layout preview`
+        : `${data.num_rows}x${data.num_cols} Dark Hex: latest ${game.latest_checkpoint.iteration} vs ${opponent}`;
+      els.subtitle.textContent = lastMove
+        ? `${lastMove.color} ${lastMove.actor} played ${lastMove.action_name}${lastMove.move_succeeded ? "" : " and revealed an occupied cell"}`
+        : `Initial position from ${data.run_dir.split("/").at(-1)}`;
+      els.moveRange.max = String(total);
+      els.moveRange.value = String(moveIndex);
+      els.moveValue.textContent = `${moveIndex} / ${total}`;
+      els.blackLabel.textContent = `Black: ${colorOwnerLabel("black")}`;
+      els.whiteLabel.textContent = `Pink: ${colorOwnerLabel("white")}`;
+      const viewLabel = view === "white" ? "Pink" : `${view[0].toUpperCase()}${view.slice(1)}`;
+      els.viewValue.textContent = view === "true" ? "True board" : view === "policy" ? "Next logits" : `${viewLabel} view`;
+
+      const result = game.result;
+      els.resultValue.textContent = result.winner_label || (result.truncated ? "Truncated" : "In progress");
+      updateEdgeMeter(valueMove);
+      updateThinkingBadge(policyMove);
+      updateWinScreen();
+
+      const activeMoveIndex = Math.min(moveIndex, Math.max(0, total - 1));
+      [...els.moveList.children].forEach((node, index) => {
+        node.classList.toggle("active", index === activeMoveIndex);
+      });
+    }
+
+    function buildMoveList() {
+      els.moveList.innerHTML = "";
+      game.moves.forEach((move, index) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = `move${move.move_succeeded ? "" : " failed"}`;
+        item.innerHTML = `
+          <span class="badge">${move.action_name}</span>
+          <span>
+            <span class="move-actor">${move.actor} ${move.color}</span>
+            <span class="move-meta">${Math.round(move.selected_policy_prob * 100)}% policy · <span class="move-value">${signed(move.value_estimate ?? 0)}</span> value</span>
+          </span>
+          <span class="move-meta">#${index + 1}</span>
+        `;
+        item.addEventListener("click", () => {
+          playing = false;
+          els.playPause.textContent = "▶";
+          moveIndex = index;
+          renderPosition();
+        });
+        els.moveList.appendChild(item);
+      });
+    }
+
+    function setGame(index) {
+      game = data.games[index];
+      moveIndex = 0;
+      playing = false;
+      els.playPause.textContent = "▶";
+      els.gameSelect.value = String(index);
+      lastRenderedMoveIndex = -1;
+      buildMoveList();
+      renderPosition();
+    }
+
+    function populateGames() {
+      els.gameSelect.innerHTML = "";
+      data.games.forEach((item, index) => {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = item.preview
+          ? `${data.num_rows}x${data.num_cols} preview`
+          : `Game ${index + 1}: ${data.latest_iteration} vs ${item.opponent_checkpoint.iteration}`;
+        els.gameSelect.appendChild(option);
+      });
+    }
+
+    function actionName(action, cols) {
+      const row = Math.floor(action / cols);
+      const col = action % cols;
+      return `${String.fromCharCode("a".charCodeAt(0) + col)}${row + 1}`;
+    }
+
+    function makePolicy(size, action, heat) {
+      const total = size * size;
+      const policy = Array(total).fill((1 - heat) / Math.max(1, total - 1));
+      policy[action] = heat;
+      return policy;
+    }
+
+    function policyToLogits(policy) {
+      return policy.map((prob) => Math.log(Math.max(prob, 1e-12)));
+    }
+
+    function makePreviewData(size) {
+      const total = size * size;
+      const board = Array(total).fill(0);
+      const snapshots = [];
+      const moves = [];
+      const mid = Math.floor(size / 2);
+      const line = [
+        [0, mid], [mid, 0],
+        [1, mid], [mid, 1],
+        [2, mid], [mid, 2],
+        [3, mid], [2, mid + 1],
+        [4, mid], [2, mid + 2],
+        [5, mid], [2, mid + 3],
+        [6, mid],
+      ].filter(([row, col]) => row < size && col < size);
+
+      const snapshot = (ply, winner = -1) => ({
+        board: [...board],
+        black_view: [...board],
+        white_view: [...board],
+        current_player: ply % 2,
+        current_color: ply % 2,
+        legal_action_mask: board.map((value) => value === 0),
+        move_succeeded: true,
+        winner_color: winner,
+        terminated: winner >= 0,
+        truncated: false,
+        rewards: winner === 0 ? [1, -1] : winner === 1 ? [-1, 1] : [0, 0],
+        step_count: ply,
+      });
+
+      snapshots.push(snapshot(0));
+      line.forEach(([row, col], ply) => {
+        const color = ply % 2;
+        const action = row * size + col;
+        const mark = color + 1;
+        const value = color === 0 ? -0.15 + ply * 0.08 : 0.12 - ply * 0.045;
+        board[action] = mark;
+        const winner = ply === line.length - 1 ? 0 : -1;
+        const after = snapshot(ply + 1, winner);
+        const policy = makePolicy(size, action, 0.24 + Math.min(0.4, ply * 0.035));
+        moves.push({
+          ply,
+          actor: color === 0 ? "latest" : "opponent",
+          player_id: color,
+          player_label: color === 0 ? "latest preview" : "opponent preview",
+          color: color === 0 ? "black" : "white",
+          action,
+          action_name: actionName(action, size),
+          row,
+          col,
+          policy,
+          policy_logits: policyToLogits(policy),
+          selected_policy_prob: policy[action],
+          value_estimate: value,
+          black_edge_value: color === 0 ? value : -value,
+          latest_edge_value: color === 0 ? value : -value,
+          move_succeeded: true,
+          before: snapshots[snapshots.length - 1],
+          after,
+        });
+        snapshots.push(after);
+      });
+
+      return {
+        schema_version: 1,
+        game: "dark_hex",
+        preview: true,
+        run_dir: `${size}x${size} layout preview`,
+        num_rows: size,
+        num_cols: size,
+        latest_iteration: "preview",
+        opponent_iterations: ["preview"],
+        games: [{
+          id: "preview-1",
+          preview: true,
+          game_index: 0,
+          seed: 0,
+          deterministic: true,
+          latest_checkpoint: { iteration: "preview", path: "" },
+          opponent_checkpoint: { iteration: "preview", path: "" },
+          player_labels: { "0": "latest preview", "1": "opponent preview" },
+          player_checkpoints: { "0": "", "1": "" },
+          player_order: [0, 1],
+          color_players: { black: 0, white: 1 },
+          moves,
+          snapshots,
+          result: {
+            winner_color: 0,
+            winner_player: 0,
+            winner_label: "latest preview",
+            rewards: [1, -1],
+            terminated: true,
+            truncated: false,
+            num_plies: moves.length,
+          },
+        }],
+      };
+    }
+
+    function resize() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    }
+
+    function turnDurationMs() {
+      const move = nextPolicyMove();
+      return view === "policy" && move?.color === "white"
+        ? PINK_THINKING_TURN_MS
+        : DEFAULT_TURN_MS;
+    }
+
+    function animate(now = 0) {
+      requestAnimationFrame(animate);
+      controls.update();
+      animateSceneObjects(now);
+
+      if (playing && game && now - lastTick > turnDurationMs() / speed) {
+        lastTick = now;
+        moveIndex = Math.min(moveIndex + 1, game.moves.length);
+        if (moveIndex >= game.moves.length) {
+          playing = false;
+          els.playPause.textContent = "▶";
+        }
+        renderPosition();
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    els.gameSelect.addEventListener("change", () => setGame(Number(els.gameSelect.value)));
+    els.playPause.addEventListener("click", () => {
+      if (!game) return;
+      if (moveIndex >= game.moves.length) moveIndex = 0;
+      playing = !playing;
+      lastTick = performance.now();
+      els.playPause.textContent = playing ? "Ⅱ" : "▶";
+      renderPosition();
+    });
+    els.moveRange.addEventListener("input", () => {
+      playing = false;
+      els.playPause.textContent = "▶";
+      moveIndex = Number(els.moveRange.value);
+      renderPosition();
+    });
+    els.speedRange.addEventListener("input", () => {
+      speed = Number(els.speedRange.value);
+      els.speedValue.textContent = speed.toFixed(2).replace(/0$/, "");
+    });
+    els.viewMode.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-view]");
+      if (!button) return;
+      view = button.dataset.view;
+      [...els.viewMode.querySelectorAll("button")].forEach((item) => item.classList.toggle("active", item === button));
+      renderPosition();
+    });
+    els.replayButton.addEventListener("click", () => {
+      if (!game) return;
+      moveIndex = 0;
+      playing = true;
+      lastTick = performance.now();
+      els.playPause.textContent = "Ⅱ";
+      renderPosition();
+    });
+    els.nextGameButton.addEventListener("click", () => {
+      if (!data?.games?.length) return;
+      const nextIndex = (Number(els.gameSelect.value) + 1) % data.games.length;
+      setGame(nextIndex);
+    });
+    window.addEventListener("resize", resize);
+
+    async function init() {
+      resize();
+      const params = new URLSearchParams(window.location.search);
+      const previewSize = Number(params.get("preview") || 0);
+      if (previewSize > 0) {
+        data = makePreviewData(previewSize);
+      } else {
+        const requested = params.get("data") || "dark_hex_7x7_matches.json";
+        const dataUrl = requested.includes("/") ? requested : `./${requested}`;
+        const response = await fetch(dataUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Could not load ${dataUrl}: ${response.status}`);
+        data = await response.json();
+      }
+      populateGames();
+      buildBoard();
+      setGame(0);
+      animate();
+    }
+
+    init().catch((error) => {
+      els.title.textContent = "Could not load replay data";
+      els.subtitle.textContent = error.message;
+      console.error(error);
+      animate();
+    });
+  </script>
+</body>
+</html>

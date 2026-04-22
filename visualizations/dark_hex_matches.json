@@ -1,0 +1,6074 @@
+{
+  "schema_version": 1,
+  "game": "dark_hex",
+  "run_dir": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41",
+  "num_rows": 3,
+  "num_cols": 3,
+  "latest_iteration": 1900,
+  "opponent_iterations": [
+    1800,
+    1700,
+    1000
+  ],
+  "games": [
+    {
+      "id": "game-1",
+      "game_index": 0,
+      "seed": 20260421,
+      "deterministic": false,
+      "latest_checkpoint": {
+        "iteration": 1900,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900"
+      },
+      "opponent_checkpoint": {
+        "iteration": 1800,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001800"
+      },
+      "player_labels": {
+        "0": "latest iter 1900",
+        "1": "opponent iter 1800"
+      },
+      "player_checkpoints": {
+        "0": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900",
+        "1": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001800"
+      },
+      "player_order": [
+        0,
+        1
+      ],
+      "color_players": {
+        "black": 0,
+        "white": 1
+      },
+      "moves": [
+        {
+          "ply": 0,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.0002589545620139688,
+            0.00021986474166624248,
+            0.6180881857872009,
+            1.6164423868758604e-05,
+            0.13806207478046417,
+            7.340761658269912e-05,
+            0.22286471724510193,
+            0.02009454555809498,
+            0.00032222404843196273
+          ],
+          "selected_policy_prob": 0.6180881857872009,
+          "value_estimate": 0.0029512615874409676,
+          "black_edge_value": 0.0029512615874409676,
+          "latest_edge_value": 0.0029512615874409676,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 0
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          }
+        },
+        {
+          "ply": 1,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "white",
+          "action": 6,
+          "action_name": "a3",
+          "row": 2,
+          "col": 0,
+          "policy": [
+            0.0004661057610064745,
+            0.0003316086658742279,
+            0.25681179761886597,
+            7.319627911783755e-05,
+            0.45788124203681946,
+            2.7391966796130873e-05,
+            0.27399227023124695,
+            0.010271552950143814,
+            0.00014473377086687833
+          ],
+          "selected_policy_prob": 0.27399227023124695,
+          "value_estimate": 0.00851682759821415,
+          "black_edge_value": -0.00851682759821415,
+          "latest_edge_value": -0.00851682759821415,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          }
+        },
+        {
+          "ply": 2,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 5,
+          "action_name": "c2",
+          "row": 1,
+          "col": 2,
+          "policy": [
+            1.4644147995568346e-05,
+            8.876789252099115e-06,
+            0.0,
+            0.00022153004829306155,
+            4.768346479977481e-05,
+            0.9788044691085815,
+            0.014449645765125751,
+            0.0059400987811386585,
+            0.0005130126373842359
+          ],
+          "selected_policy_prob": 0.9788044691085815,
+          "value_estimate": 0.372087687253952,
+          "black_edge_value": 0.372087687253952,
+          "latest_edge_value": 0.372087687253952,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          }
+        },
+        {
+          "ply": 3,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "white",
+          "action": 1,
+          "action_name": "b1",
+          "row": 0,
+          "col": 1,
+          "policy": [
+            0.00035011261934414506,
+            0.08262887597084045,
+            0.022072644904255867,
+            0.8942704200744629,
+            0.0004804653290193528,
+            0.00016557244816794991,
+            0.0,
+            2.351499097130727e-05,
+            8.292284292110708e-06
+          ],
+          "selected_policy_prob": 0.08262887597084045,
+          "value_estimate": 0.160869762301445,
+          "black_edge_value": -0.160869762301445,
+          "latest_edge_value": -0.160869762301445,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          },
+          "after": {
+            "board": [
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          }
+        },
+        {
+          "ply": 4,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 6,
+          "action_name": "a3",
+          "row": 2,
+          "col": 0,
+          "policy": [
+            3.651989027275704e-05,
+            1.2632641301024705e-05,
+            0.0,
+            0.0004821190959773958,
+            0.0001589140883879736,
+            0.0,
+            0.13852271437644958,
+            0.20655927062034607,
+            0.6542279124259949
+          ],
+          "selected_policy_prob": 0.13852271437644958,
+          "value_estimate": 0.9792766571044922,
+          "black_edge_value": 0.9792766571044922,
+          "latest_edge_value": 0.9792766571044922,
+          "move_succeeded": false,
+          "before": {
+            "board": [
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          },
+          "after": {
+            "board": [
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          }
+        },
+        {
+          "ply": 5,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 7,
+          "action_name": "b3",
+          "row": 2,
+          "col": 1,
+          "policy": [
+            6.703707913402468e-05,
+            2.3447884814231656e-05,
+            0.0,
+            0.0002828387077897787,
+            0.00037684201379306614,
+            0.0,
+            0.0,
+            0.4862048327922821,
+            0.5130450129508972
+          ],
+          "selected_policy_prob": 0.4862048327922821,
+          "value_estimate": 0.9748930931091309,
+          "black_edge_value": 0.9748930931091309,
+          "latest_edge_value": 0.9748930931091309,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          },
+          "after": {
+            "board": [
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": 0,
+            "terminated": true,
+            "truncated": false,
+            "rewards": [
+              1.0,
+              -1.0
+            ],
+            "step_count": 6
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 0
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 1
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 2
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 3
+        },
+        {
+          "board": [
+            0,
+            2,
+            1,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 4
+        },
+        {
+          "board": [
+            0,
+            2,
+            1,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": false,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 5
+        },
+        {
+          "board": [
+            0,
+            2,
+            1,
+            0,
+            0,
+            1,
+            2,
+            1,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            1,
+            0
+          ],
+          "white_view": [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": 0,
+          "terminated": true,
+          "truncated": false,
+          "rewards": [
+            1.0,
+            -1.0
+          ],
+          "step_count": 6
+        }
+      ],
+      "result": {
+        "winner_color": 0,
+        "winner_player": 0,
+        "winner_label": "latest iter 1900",
+        "rewards": [
+          1.0,
+          -1.0
+        ],
+        "terminated": true,
+        "truncated": false,
+        "num_plies": 6
+      }
+    },
+    {
+      "id": "game-2",
+      "game_index": 1,
+      "seed": 20260422,
+      "deterministic": false,
+      "latest_checkpoint": {
+        "iteration": 1900,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900"
+      },
+      "opponent_checkpoint": {
+        "iteration": 1700,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001700"
+      },
+      "player_labels": {
+        "0": "latest iter 1900",
+        "1": "opponent iter 1700"
+      },
+      "player_checkpoints": {
+        "0": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900",
+        "1": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001700"
+      },
+      "player_order": [
+        0,
+        1
+      ],
+      "color_players": {
+        "black": 0,
+        "white": 1
+      },
+      "moves": [
+        {
+          "ply": 0,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.0002589545620139688,
+            0.00021986474166624248,
+            0.6180881857872009,
+            1.6164423868758604e-05,
+            0.13806207478046417,
+            7.340761658269912e-05,
+            0.22286471724510193,
+            0.02009454555809498,
+            0.00032222404843196273
+          ],
+          "selected_policy_prob": 0.6180881857872009,
+          "value_estimate": 0.0029512615874409676,
+          "black_edge_value": 0.0029512615874409676,
+          "latest_edge_value": 0.0029512615874409676,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 0
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          }
+        },
+        {
+          "ply": 1,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1700",
+          "color": "white",
+          "action": 6,
+          "action_name": "a3",
+          "row": 2,
+          "col": 0,
+          "policy": [
+            0.0011225545313209295,
+            0.00036817186628468335,
+            0.1560155600309372,
+            0.00012155059812357649,
+            0.33619368076324463,
+            2.885659341700375e-05,
+            0.44688647985458374,
+            0.05900018289685249,
+            0.0002628895454108715
+          ],
+          "selected_policy_prob": 0.44688647985458374,
+          "value_estimate": -0.013360109180212021,
+          "black_edge_value": 0.013360109180212021,
+          "latest_edge_value": 0.013360109180212021,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          }
+        },
+        {
+          "ply": 2,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 5,
+          "action_name": "c2",
+          "row": 1,
+          "col": 2,
+          "policy": [
+            1.4644147995568346e-05,
+            8.876789252099115e-06,
+            0.0,
+            0.00022153004829306155,
+            4.768346479977481e-05,
+            0.9788044691085815,
+            0.014449645765125751,
+            0.0059400987811386585,
+            0.0005130126373842359
+          ],
+          "selected_policy_prob": 0.9788044691085815,
+          "value_estimate": 0.372087687253952,
+          "black_edge_value": 0.372087687253952,
+          "latest_edge_value": 0.372087687253952,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          }
+        },
+        {
+          "ply": 3,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1700",
+          "color": "white",
+          "action": 3,
+          "action_name": "a2",
+          "row": 1,
+          "col": 0,
+          "policy": [
+            5.707802847609855e-05,
+            0.00216507026925683,
+            0.021325767040252686,
+            0.9759970903396606,
+            0.0003653974272310734,
+            7.205347355920821e-05,
+            0.0,
+            1.6345518815796822e-05,
+            1.323654373663885e-06
+          ],
+          "selected_policy_prob": 0.9759970903396606,
+          "value_estimate": 0.291144460439682,
+          "black_edge_value": -0.291144460439682,
+          "latest_edge_value": -0.291144460439682,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              2,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          }
+        },
+        {
+          "ply": 4,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 8,
+          "action_name": "c3",
+          "row": 2,
+          "col": 2,
+          "policy": [
+            3.651989027275704e-05,
+            1.2632641301024705e-05,
+            0.0,
+            0.0004821190959773958,
+            0.0001589140883879736,
+            0.0,
+            0.13852271437644958,
+            0.20655927062034607,
+            0.6542279124259949
+          ],
+          "selected_policy_prob": 0.6542279124259949,
+          "value_estimate": 0.9792766571044922,
+          "black_edge_value": 0.9792766571044922,
+          "latest_edge_value": 0.9792766571044922,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              2,
+              0,
+              1,
+              2,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              2,
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": 0,
+            "terminated": true,
+            "truncated": false,
+            "rewards": [
+              1.0,
+              -1.0
+            ],
+            "step_count": 5
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 0
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 1
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 2
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 3
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            2,
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 4
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            2,
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": 0,
+          "terminated": true,
+          "truncated": false,
+          "rewards": [
+            1.0,
+            -1.0
+          ],
+          "step_count": 5
+        }
+      ],
+      "result": {
+        "winner_color": 0,
+        "winner_player": 0,
+        "winner_label": "latest iter 1900",
+        "rewards": [
+          1.0,
+          -1.0
+        ],
+        "terminated": true,
+        "truncated": false,
+        "num_plies": 5
+      }
+    },
+    {
+      "id": "game-3",
+      "game_index": 2,
+      "seed": 20260423,
+      "deterministic": false,
+      "latest_checkpoint": {
+        "iteration": 1900,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900"
+      },
+      "opponent_checkpoint": {
+        "iteration": 1000,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/milestones/001000"
+      },
+      "player_labels": {
+        "0": "latest iter 1900",
+        "1": "opponent iter 1000"
+      },
+      "player_checkpoints": {
+        "0": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900",
+        "1": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/milestones/001000"
+      },
+      "player_order": [
+        0,
+        1
+      ],
+      "color_players": {
+        "black": 0,
+        "white": 1
+      },
+      "moves": [
+        {
+          "ply": 0,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 4,
+          "action_name": "b2",
+          "row": 1,
+          "col": 1,
+          "policy": [
+            0.0002589545620139688,
+            0.00021986474166624248,
+            0.6180881857872009,
+            1.6164423868758604e-05,
+            0.13806207478046417,
+            7.340761658269912e-05,
+            0.22286471724510193,
+            0.02009454555809498,
+            0.00032222404843196273
+          ],
+          "selected_policy_prob": 0.13806207478046417,
+          "value_estimate": 0.0029512615874409676,
+          "black_edge_value": 0.0029512615874409676,
+          "latest_edge_value": 0.0029512615874409676,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 0
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          }
+        },
+        {
+          "ply": 1,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1000",
+          "color": "white",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.0013171309838071465,
+            0.0005148533382453024,
+            0.6576417088508606,
+            6.557990855071694e-05,
+            0.24145257472991943,
+            1.2591509403137024e-05,
+            0.09573475271463394,
+            0.0031936292070895433,
+            6.710551679134369e-05
+          ],
+          "selected_policy_prob": 0.6576417088508606,
+          "value_estimate": 0.00011054845526814461,
+          "black_edge_value": -0.00011054845526814461,
+          "latest_edge_value": -0.00011054845526814461,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          }
+        },
+        {
+          "ply": 2,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 7,
+          "action_name": "b3",
+          "row": 2,
+          "col": 1,
+          "policy": [
+            8.655655619804747e-06,
+            0.035915229469537735,
+            0.0008309984114021063,
+            8.735731171327643e-06,
+            0.0,
+            7.644710422027856e-06,
+            0.00010647049202816561,
+            0.9630833268165588,
+            3.8918835343793035e-05
+          ],
+          "selected_policy_prob": 0.9630833268165588,
+          "value_estimate": -0.0992894396185875,
+          "black_edge_value": -0.0992894396185875,
+          "latest_edge_value": -0.0992894396185875,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          }
+        },
+        {
+          "ply": 3,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1000",
+          "color": "white",
+          "action": 5,
+          "action_name": "c2",
+          "row": 1,
+          "col": 2,
+          "policy": [
+            3.630706260082661e-06,
+            6.98020187428483e-07,
+            0.0,
+            7.708084012847394e-05,
+            2.2439633539761417e-05,
+            0.985550045967102,
+            0.0062180450186133385,
+            0.004298434592783451,
+            0.00382952019572258
+          ],
+          "selected_policy_prob": 0.985550045967102,
+          "value_estimate": 0.43276017904281616,
+          "black_edge_value": -0.43276017904281616,
+          "latest_edge_value": -0.43276017904281616,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              2,
+              0,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          }
+        },
+        {
+          "ply": 4,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 1,
+          "action_name": "b1",
+          "row": 0,
+          "col": 1,
+          "policy": [
+            0.004989983979612589,
+            0.7370907664299011,
+            0.24145294725894928,
+            0.014286519959568977,
+            0.0,
+            0.00025556402397342026,
+            0.0016832886030897498,
+            0.0,
+            0.0002409405424259603
+          ],
+          "selected_policy_prob": 0.7370907664299011,
+          "value_estimate": 0.5157889723777771,
+          "black_edge_value": 0.5157889723777771,
+          "latest_edge_value": 0.5157889723777771,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              1,
+              2,
+              0,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          },
+          "after": {
+            "board": [
+              0,
+              1,
+              2,
+              0,
+              1,
+              2,
+              0,
+              1,
+              0
+            ],
+            "black_view": [
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": 0,
+            "terminated": true,
+            "truncated": false,
+            "rewards": [
+              1.0,
+              -1.0
+            ],
+            "step_count": 5
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 0
+        },
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 1
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 2
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 3
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            0,
+            1,
+            2,
+            0,
+            1,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 4
+        },
+        {
+          "board": [
+            0,
+            1,
+            2,
+            0,
+            1,
+            2,
+            0,
+            1,
+            0
+          ],
+          "black_view": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": 0,
+          "terminated": true,
+          "truncated": false,
+          "rewards": [
+            1.0,
+            -1.0
+          ],
+          "step_count": 5
+        }
+      ],
+      "result": {
+        "winner_color": 0,
+        "winner_player": 0,
+        "winner_label": "latest iter 1900",
+        "rewards": [
+          1.0,
+          -1.0
+        ],
+        "terminated": true,
+        "truncated": false,
+        "num_plies": 5
+      }
+    },
+    {
+      "id": "game-4",
+      "game_index": 3,
+      "seed": 20260424,
+      "deterministic": false,
+      "latest_checkpoint": {
+        "iteration": 1900,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900"
+      },
+      "opponent_checkpoint": {
+        "iteration": 1800,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001800"
+      },
+      "player_labels": {
+        "0": "latest iter 1900",
+        "1": "opponent iter 1800"
+      },
+      "player_checkpoints": {
+        "0": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900",
+        "1": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001800"
+      },
+      "player_order": [
+        1,
+        0
+      ],
+      "color_players": {
+        "black": 1,
+        "white": 0
+      },
+      "moves": [
+        {
+          "ply": 0,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "black",
+          "action": 6,
+          "action_name": "a3",
+          "row": 2,
+          "col": 0,
+          "policy": [
+            0.0004661057610064745,
+            0.0003316086658742279,
+            0.25681179761886597,
+            7.319627911783755e-05,
+            0.45788124203681946,
+            2.7391966796130873e-05,
+            0.27399227023124695,
+            0.010271552950143814,
+            0.00014473377086687833
+          ],
+          "selected_policy_prob": 0.27399227023124695,
+          "value_estimate": 0.00851682759821415,
+          "black_edge_value": 0.00851682759821415,
+          "latest_edge_value": -0.00851682759821415,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 0
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          }
+        },
+        {
+          "ply": 1,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "white",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.0002589545620139688,
+            0.00021986474166624248,
+            0.6180881857872009,
+            1.6164423868758604e-05,
+            0.13806207478046417,
+            7.340761658269912e-05,
+            0.22286471724510193,
+            0.02009454555809498,
+            0.00032222404843196273
+          ],
+          "selected_policy_prob": 0.6180881857872009,
+          "value_estimate": 0.0029512615874409676,
+          "black_edge_value": -0.0029512615874409676,
+          "latest_edge_value": 0.0029512615874409676,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          }
+        },
+        {
+          "ply": 2,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "black",
+          "action": 3,
+          "action_name": "a2",
+          "row": 1,
+          "col": 0,
+          "policy": [
+            0.00035011261934414506,
+            0.08262887597084045,
+            0.022072644904255867,
+            0.8942704200744629,
+            0.0004804653290193528,
+            0.00016557244816794991,
+            0.0,
+            2.351499097130727e-05,
+            8.292284292110708e-06
+          ],
+          "selected_policy_prob": 0.8942704200744629,
+          "value_estimate": 0.160869762301445,
+          "black_edge_value": 0.160869762301445,
+          "latest_edge_value": -0.160869762301445,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          }
+        },
+        {
+          "ply": 3,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "white",
+          "action": 5,
+          "action_name": "c2",
+          "row": 1,
+          "col": 2,
+          "policy": [
+            1.4644147995568346e-05,
+            8.876789252099115e-06,
+            0.0,
+            0.00022153004829306155,
+            4.768346479977481e-05,
+            0.9788044691085815,
+            0.014449645765125751,
+            0.0059400987811386585,
+            0.0005130126373842359
+          ],
+          "selected_policy_prob": 0.9788044691085815,
+          "value_estimate": 0.372087687253952,
+          "black_edge_value": -0.372087687253952,
+          "latest_edge_value": 0.372087687253952,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          }
+        },
+        {
+          "ply": 4,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "black",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.5177849531173706,
+            0.380281925201416,
+            0.10168413817882538,
+            0.0,
+            6.478752038674429e-05,
+            0.00017536569794174284,
+            0.0,
+            5.160661203262862e-06,
+            3.5850846415996784e-06
+          ],
+          "selected_policy_prob": 0.10168413817882538,
+          "value_estimate": 0.9832243323326111,
+          "black_edge_value": 0.9832243323326111,
+          "latest_edge_value": -0.9832243323326111,
+          "move_succeeded": false,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          }
+        },
+        {
+          "ply": 5,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1800",
+          "color": "black",
+          "action": 1,
+          "action_name": "b1",
+          "row": 0,
+          "col": 1,
+          "policy": [
+            0.4256473779678345,
+            0.5717169046401978,
+            0.0,
+            0.0,
+            0.001381268142722547,
+            0.0003376639215275645,
+            0.0,
+            0.000836846767924726,
+            7.989638834260404e-05
+          ],
+          "selected_policy_prob": 0.5717169046401978,
+          "value_estimate": 1.0084269046783447,
+          "black_edge_value": 1.0084269046783447,
+          "latest_edge_value": -1.0084269046783447,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              2,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          },
+          "after": {
+            "board": [
+              0,
+              1,
+              2,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              1,
+              2,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": 0,
+            "terminated": true,
+            "truncated": false,
+            "rewards": [
+              -1.0,
+              1.0
+            ],
+            "step_count": 6
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 0
+        },
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 1
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 2
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 3
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            1,
+            0,
+            2,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 4
+        },
+        {
+          "board": [
+            0,
+            0,
+            2,
+            1,
+            0,
+            2,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            2,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "move_succeeded": false,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 5
+        },
+        {
+          "board": [
+            0,
+            1,
+            2,
+            1,
+            0,
+            2,
+            1,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            1,
+            2,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": 0,
+          "terminated": true,
+          "truncated": false,
+          "rewards": [
+            -1.0,
+            1.0
+          ],
+          "step_count": 6
+        }
+      ],
+      "result": {
+        "winner_color": 0,
+        "winner_player": 1,
+        "winner_label": "opponent iter 1800",
+        "rewards": [
+          -1.0,
+          1.0
+        ],
+        "terminated": true,
+        "truncated": false,
+        "num_plies": 6
+      }
+    },
+    {
+      "id": "game-5",
+      "game_index": 4,
+      "seed": 20260425,
+      "deterministic": false,
+      "latest_checkpoint": {
+        "iteration": 1900,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900"
+      },
+      "opponent_checkpoint": {
+        "iteration": 1700,
+        "path": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001700"
+      },
+      "player_labels": {
+        "0": "latest iter 1900",
+        "1": "opponent iter 1700"
+      },
+      "player_checkpoints": {
+        "0": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001900",
+        "1": "/home/kklusek/dev/Jaxpot/outputs/2026-04-21/train_selfplay.yaml/dark_hex_fast_14-48-41/checkpoints/001700"
+      },
+      "player_order": [
+        0,
+        1
+      ],
+      "color_players": {
+        "black": 0,
+        "white": 1
+      },
+      "moves": [
+        {
+          "ply": 0,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 2,
+          "action_name": "c1",
+          "row": 0,
+          "col": 2,
+          "policy": [
+            0.0002589545620139688,
+            0.00021986474166624248,
+            0.6180881857872009,
+            1.6164423868758604e-05,
+            0.13806207478046417,
+            7.340761658269912e-05,
+            0.22286471724510193,
+            0.02009454555809498,
+            0.00032222404843196273
+          ],
+          "selected_policy_prob": 0.6180881857872009,
+          "value_estimate": 0.0029512615874409676,
+          "black_edge_value": 0.0029512615874409676,
+          "latest_edge_value": 0.0029512615874409676,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 0
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          }
+        },
+        {
+          "ply": 1,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1700",
+          "color": "white",
+          "action": 4,
+          "action_name": "b2",
+          "row": 1,
+          "col": 1,
+          "policy": [
+            0.0011225545313209295,
+            0.00036817186628468335,
+            0.1560155600309372,
+            0.00012155059812357649,
+            0.33619368076324463,
+            2.885659341700375e-05,
+            0.44688647985458374,
+            0.05900018289685249,
+            0.0002628895454108715
+          ],
+          "selected_policy_prob": 0.33619368076324463,
+          "value_estimate": -0.013360109180212021,
+          "black_edge_value": 0.013360109180212021,
+          "latest_edge_value": 0.013360109180212021,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 1
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          }
+        },
+        {
+          "ply": 2,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 5,
+          "action_name": "c2",
+          "row": 1,
+          "col": 2,
+          "policy": [
+            1.4644147995568346e-05,
+            8.876789252099115e-06,
+            0.0,
+            0.00022153004829306155,
+            4.768346479977481e-05,
+            0.9788044691085815,
+            0.014449645765125751,
+            0.0059400987811386585,
+            0.0005130126373842359
+          ],
+          "selected_policy_prob": 0.9788044691085815,
+          "value_estimate": 0.372087687253952,
+          "black_edge_value": 0.372087687253952,
+          "latest_edge_value": 0.372087687253952,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 2
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          }
+        },
+        {
+          "ply": 3,
+          "actor": "opponent",
+          "player_id": 1,
+          "player_label": "opponent iter 1700",
+          "color": "white",
+          "action": 7,
+          "action_name": "b3",
+          "row": 2,
+          "col": 1,
+          "policy": [
+            3.858322452288121e-05,
+            0.13853931427001953,
+            0.0015782044501975179,
+            2.888479684770573e-05,
+            0.0,
+            1.2048371900164057e-05,
+            0.0005963000585325062,
+            0.8591853380203247,
+            2.129981658072211e-05
+          ],
+          "selected_policy_prob": 0.8591853380203247,
+          "value_estimate": 0.08510106056928635,
+          "black_edge_value": -0.08510106056928635,
+          "latest_edge_value": -0.08510106056928635,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 3
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          }
+        },
+        {
+          "ply": 4,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 7,
+          "action_name": "b3",
+          "row": 2,
+          "col": 1,
+          "policy": [
+            3.651989027275704e-05,
+            1.2632641301024705e-05,
+            0.0,
+            0.0004821190959773958,
+            0.0001589140883879736,
+            0.0,
+            0.13852271437644958,
+            0.20655927062034607,
+            0.6542279124259949
+          ],
+          "selected_policy_prob": 0.20655927062034607,
+          "value_estimate": 0.9792766571044922,
+          "black_edge_value": 0.9792766571044922,
+          "latest_edge_value": 0.9792766571044922,
+          "move_succeeded": false,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 4
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              2,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              false,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          }
+        },
+        {
+          "ply": 5,
+          "actor": "latest",
+          "player_id": 0,
+          "player_label": "latest iter 1900",
+          "color": "black",
+          "action": 8,
+          "action_name": "c3",
+          "row": 2,
+          "col": 2,
+          "policy": [
+            3.3324158721370623e-06,
+            2.3394877644022927e-06,
+            0.0,
+            4.613012060872279e-05,
+            4.279423228581436e-05,
+            0.0,
+            0.13380257785320282,
+            0.0,
+            0.8661028742790222
+          ],
+          "selected_policy_prob": 0.8661028742790222,
+          "value_estimate": 0.971007764339447,
+          "black_edge_value": 0.971007764339447,
+          "latest_edge_value": 0.971007764339447,
+          "move_succeeded": true,
+          "before": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              2,
+              0
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "current_player": 0,
+            "current_color": 0,
+            "legal_action_mask": [
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              false,
+              true
+            ],
+            "move_succeeded": false,
+            "winner_color": -1,
+            "terminated": false,
+            "truncated": false,
+            "rewards": [
+              0.0,
+              0.0
+            ],
+            "step_count": 5
+          },
+          "after": {
+            "board": [
+              0,
+              0,
+              1,
+              0,
+              2,
+              1,
+              0,
+              2,
+              1
+            ],
+            "black_view": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              2,
+              1
+            ],
+            "white_view": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "current_player": 1,
+            "current_color": 1,
+            "legal_action_mask": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "move_succeeded": true,
+            "winner_color": 0,
+            "terminated": true,
+            "truncated": false,
+            "rewards": [
+              1.0,
+              -1.0
+            ],
+            "step_count": 6
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "board": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 0
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 1
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 2
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 3
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            2,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 4
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            2,
+            0
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            0
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "current_player": 0,
+          "current_color": 0,
+          "legal_action_mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "move_succeeded": false,
+          "winner_color": -1,
+          "terminated": false,
+          "truncated": false,
+          "rewards": [
+            0.0,
+            0.0
+          ],
+          "step_count": 5
+        },
+        {
+          "board": [
+            0,
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            2,
+            1
+          ],
+          "black_view": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            1
+          ],
+          "white_view": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "current_player": 1,
+          "current_color": 1,
+          "legal_action_mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "move_succeeded": true,
+          "winner_color": 0,
+          "terminated": true,
+          "truncated": false,
+          "rewards": [
+            1.0,
+            -1.0
+          ],
+          "step_count": 6
+        }
+      ],
+      "result": {
+        "winner_color": 0,
+        "winner_player": 0,
+        "winner_label": "latest iter 1900",
+        "rewards": [
+          1.0,
+          -1.0
+        ],
+        "terminated": true,
+        "truncated": false,
+        "num_plies": 6
+      }
+    }
+  ]
+}
