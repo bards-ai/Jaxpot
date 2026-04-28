@@ -10,7 +10,7 @@
 ![pgx](https://img.shields.io/badge/envs-pgx-success)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-<video src="public/dark%20hex%201080p.mp4" autoplay muted loop playsinline width="780" poster="public/diagrams/jaxpot-concepts-overview-labeled-grid.png"></video>
+<video src="https://github.com/Shandelier/Jaxpot/raw/main/public/dark%20hex%201080p.mp4" autoplay muted loop playsinline width="780" poster="public/diagrams/jaxpot-concepts-overview-labeled-grid.png"></video>
 
 </div>
 
