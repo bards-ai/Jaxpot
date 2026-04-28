@@ -1,4 +1,18 @@
+<div align="center">
+
 # Jaxpot
+
+*Scalable JAX self-play for `pgx` board games — PPO, league play, and rich evaluation out of the box.*
+
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![JAX](https://img.shields.io/badge/built%20with-JAX-orange)
+![Hydra](https://img.shields.io/badge/config-Hydra-89b4fa)
+![pgx](https://img.shields.io/badge/envs-pgx-success)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+<video src="public/dark%20hex%201080p.mp4" autoplay muted loop playsinline width="780" poster="public/diagrams/jaxpot-concepts-overview-labeled-grid.png"></video>
+
+</div>
 
 Jaxpot is a reinforcement learning framework primarily focused on training for [pgx](https://github.com/sotetsuk/pgx)-based environments, using scalable distributed training with JAX. The repository includes configuration files for models (such as ResNet), environments, and training regimes (PPO), as well as support for multi-agent league play, baseline evaluation, and tools for experiment logging and reproducibility.
 
@@ -34,6 +48,10 @@ If TensorBoard only shows the `HPARAMS` tab and not `Scalars`, restart TensorBoa
 This walkthrough adds **Tic-Tac-Toe** as a new environment and trains a small MLP with PPO self-play. It is the recommended starting point if you have never used Jaxpot before.
 
 Jaxpot uses [Hydra](https://hydra.cc/) for configuration. A training run is assembled by composing four kinds of YAML files:
+
+<p align="center">
+  <img src="public/diagrams/hydra-experiment-composition.png" width="720" alt="Hydra experiment composition" />
+</p>
 
 
 | File                                   | What it picks                                                                    |
@@ -148,6 +166,14 @@ config/experiment/tic_tac_toe/fast.yaml
 ```
 
 To adapt this to a different `pgx` game, copy the three files, change the `_target_` of the env, update `obs_shape` / `action_dim` in the model to match the new env's `observation_shape` and `num_actions`, and bump `num_steps`, `selfplay_num_envs`, and `total_iters` for larger games.
+
+## Results — Dark Hex 7x7
+
+<p align="center">
+  <img src="visualizations/article_charts/dark_hex_article_panel.png" width="780" alt="Dark Hex training results" />
+</p>
+
+Self-play PPO checkpoints rated by round-robin Elo and win-rate vs random. See [`scripts/plot_dark_hex_training_charts.py`](scripts/plot_dark_hex_training_charts.py) for the plotting code and [`visualizations/article_charts/`](visualizations/article_charts/) for the underlying JSON.
 
 ## Documentation
 
