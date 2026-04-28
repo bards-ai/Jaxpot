@@ -2,7 +2,7 @@
 
 # Jaxpot
 
-*Scalable JAX self-play for `pgx` board games — PPO, league play, and rich evaluation out of the box.*
+*Scalable JAX self-play for `pgx` board games - PPO, league play, and rich evaluation out of the box.*
 
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![JAX](https://img.shields.io/badge/built%20with-JAX-orange)
@@ -63,7 +63,7 @@ Jaxpot uses [Hydra](https://hydra.cc/) for configuration. A training run is asse
 | `config/experiment/<game>/<name>.yaml` | The top-level experiment that overrides the four above and sets hyperparameters. |
 
 
-You only need to write **one** new file in each category — Hydra defaults take care of the rest.
+You only need to write **one** new file in each category - Hydra defaults take care of the rest.
 
 ---
 
@@ -160,7 +160,7 @@ There is also a standalone evaluation helper:
 python scripts/eval_checkpoint.py /path/to/checkpoint --num-envs 1024 --num-steps 16 --seed 42
 ```
 
-## Recap — files you created
+## Recap - files you created
 
 ```
 config/env/tic_tac_toe/default.yaml
