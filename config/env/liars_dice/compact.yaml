@@ -1,0 +1,3 @@
+_target_: jaxpot.env.liars_dice.LiarsDice
+num_dice: 5
+observation_cls: compact

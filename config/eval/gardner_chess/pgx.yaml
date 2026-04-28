@@ -1,0 +1,15 @@
+# @package _global_
+#
+# PGX baseline evaluator for Gardner Chess.
+# Usage: add `- override /eval: gardner_chess/pgx` to your experiment defaults.
+#
+eval:
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 10
+    num_envs: 128
+    num_steps: 128
+    name: baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.pgx.baseline.PGXBaselineModel
+      baseline_model_id: gardner_chess_v0
+      is_eval: true

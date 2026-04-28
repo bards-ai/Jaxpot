@@ -1,0 +1,24 @@
+# @package _global_
+#
+# PGX baseline evaluator for Go 9x9.
+# Usage: add `- override /eval: go/pgx` to your experiment defaults.
+#
+eval:
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 1
+    num_envs: 128
+    num_steps: ${num_steps}
+    name: baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.pgx.baseline.PGXBaselineModel
+      baseline_model_id: go_9x9_v0
+      is_eval: true
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 2
+    num_envs: 128
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random
+
+best_checkpoint_metric: baseline_eval/win_rate
+best_checkpoint_mode: max

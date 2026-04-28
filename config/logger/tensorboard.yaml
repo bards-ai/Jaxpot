@@ -1,0 +1,8 @@
+defaults:
+  - _self_
+  - single/tensorboard@logger_configs.tensorboard
+
+_target_: jaxpot.loggers.multi.MultiLogger
+_recursive_: false
+logger_configs: {}
+run_id: null

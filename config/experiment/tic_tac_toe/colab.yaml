@@ -1,0 +1,65 @@
+# @package _global_
+
+defaults:
+  - override /logger: wandb_public
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: tic_tac_toe/default
+  - override /eval: random
+  - _self_
+
+tags: [ "tic_tac_toe", "colab", "quickstart" ]
+experiment_name: "tic_tac_toe_colab_quickstart"
+
+trainer:
+  num_epochs: 4
+  batch_size: 2048
+  auxiliary_losses: []
+  clip_eps: 0.2
+  entropy_coeff: 0.001
+  entropy_coeff_start: 0.01
+  entropy_decay_iterations: 1000
+
+model:
+  _target_: jaxpot.models.architectures.mlp.MLPModel
+  hidden_dims: [ 64, 64 ]
+
+seed: 42
+lr: 1e-3
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+
+selfplay_num_envs: 1024
+random_num_envs: 1024
+league_num_envs: 0
+archive_num_envs: 0
+random_warmup_iters: 2000
+league_add_every: 0
+base_unit: 64
+num_steps: 9
+total_iters: 1000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 1.0
+save_every: 500
+keep_last_k: 3
+best_checkpoint_top_k: 3
+resume_from: null
+
+# Faster evaluation for a tutorial notebook.
+eval:
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 250
+    num_envs: 8192
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 250
+    num_envs: 8192
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic

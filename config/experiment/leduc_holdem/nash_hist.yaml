@@ -1,0 +1,55 @@
+# @package _global_
+# Leduc with action history — eliminates observation aliasing
+# PGX obs (34) + action history (6 steps * 4 slots) = 58 dims
+# Paper-style: tight clip, high constant entropy, low vf_coeff
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: leduc_holdem/default
+  - override /eval: leduc_holdem/hist
+  - _self_
+
+tags: ["leduc_holdem", "nash_hist"]
+experiment_name: "leduc_holdem_nash_hist"
+
+env_action_history_len: 6  # Leduc max 6 actions
+
+model:
+  hidden_dims: [128, 128, 128]
+  activation: tanh
+
+trainer:
+  num_epochs: 8
+  batch_size: 4096
+  auxiliary_losses: []
+  clip_eps: 0.025
+  clip_value: 10.0
+  value_coeff: 0.0625
+  entropy_coeff: 0.1
+  entropy_coeff_start: 0.1
+  entropy_decay_iterations: 1_000_000
+  kl_coef: 0.0
+
+seed: 42
+lr: 6.25e-5
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 256
+total_iters: 5_000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 0.5
+save_every: 500
+keep_last_k: 5
+best_checkpoint_top_k: 5
+resume_from: null

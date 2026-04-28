@@ -1,0 +1,6 @@
+_target_: jaxpot.agents.AlphaZeroAgent
+mcts_config:
+  _target_: jaxpot.alphazero.mcts.MCTSConfig
+  num_simulations: 32
+  max_num_considered_actions: 16
+  gamma: 1.0

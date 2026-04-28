@@ -1,0 +1,56 @@
+# @package _global_
+# Leduc Nash hist v2 — better value learning, moderate entropy
+# v1 plateaued at 0.164. Try: higher vf_coeff for better advantages,
+# slightly lower entropy since action history provides disambiguation,
+# tighter clip to stay near Nash
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /env: leduc_holdem/default
+  - override /eval: leduc_holdem/hist
+  - _self_
+
+tags: ["leduc_holdem", "nash_hist_v2"]
+experiment_name: "leduc_holdem_nash_hist_v2"
+
+env_action_history_len: 6
+
+model:
+  hidden_dims: [256, 256, 256]
+  activation: tanh
+
+trainer:
+  num_epochs: 8
+  batch_size: 4096
+  auxiliary_losses: []
+  clip_eps: 0.025
+  clip_value: 10.0
+  value_coeff: 0.25
+  entropy_coeff: 0.05
+  entropy_coeff_start: 0.1
+  entropy_decay_iterations: 2_000
+  kl_coef: 0.0
+
+seed: 42
+lr: 6.25e-5
+lr_schedule: "constant"
+multi_gpu: false
+use_target_selfplay: false
+selfplay_num_envs: 8192
+random_num_envs: 4096
+league_num_envs: 8192
+archive_num_envs: 2048
+base_unit: 256
+num_steps: 256
+total_iters: 5_000
+grad_accum_steps: 1
+gamma: 0.99
+gae_lambda: 0.95
+
+max_grad_norm: 0.5
+save_every: 500
+keep_last_k: 5
+best_checkpoint_top_k: 5
+resume_from: null

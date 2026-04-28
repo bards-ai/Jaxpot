@@ -1,0 +1,4 @@
+log_level: INFO
+log_file_name: "train_selfplay.log"
+
+

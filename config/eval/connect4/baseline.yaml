@@ -1,0 +1,29 @@
+# @package _global_
+#
+# Connect4 heuristic baseline evaluator + random evaluator.
+# Usage: add `- override /eval: connect4/baseline` to your experiment defaults.
+#
+eval:
+  - _target_: jaxpot.evaluator.baseline_model.BaselineModelEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    name: connect4_baseline_eval
+    baseline_model:
+      _target_: jaxpot.models.games.connect4.baseline.Connect4Baseline
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: false
+    name: eval_vs_random
+  - _target_: jaxpot.evaluator.random.RandomEvaluator
+    eval_every: 10
+    num_envs: 4096
+    num_steps: ${num_steps}
+    deterministic: true
+    name: eval_vs_random_deterministic
+  - _target_: jaxpot.evaluator.league.ArchivedLeagueEvaluator
+    eval_every: 500
+    num_envs: 4096
+    num_steps: ${num_steps}

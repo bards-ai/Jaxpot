@@ -1,0 +1,60 @@
+# @package _global_
+
+defaults:
+  - override /logger: multi
+  - override /model: mlp
+  - override /trainer: ppo
+  - override /loguru: default
+  - override /env: chess/default
+  - override /eval: gardner_chess/pgx
+  - _self_
+
+trainer:
+  num_epochs: 1
+  batch_size: 256
+  kl_coef: 0.00001
+  clip_value: 1.0
+  clip_eps: 0.2
+  value_coeff: 0.5
+  entropy_coeff: 0.003
+  entropy_coeff_start: 0.01
+  entropy_decay_iterations: 10000
+  auxiliary_losses: []
+
+seed: 42
+lr: 3e-4
+collect_aux_targets: true
+selfplay_num_envs: 128
+random_num_envs: 128
+league_num_envs: 256
+archive_num_envs: 128
+base_unit: 128
+num_steps: 128
+total_iters: 100
+gamma: 0.999
+gae_lambda: 0.95
+grad_accum_steps: 1
+max_grad_norm: 1.0
+env_history_len: 1
+
+save_every: 100
+keep_last_k: 10
+best_checkpoint_top_k: 10
+resume_from: null
+
+# League configuration
+league_max_size: 8
+league_add_every: 70
+league_temp: 1.0
+league_score_alpha: 0.1
+random_warmup_iters: 0
+league_log_every: 10
+
+# Archive configuration and evaluation-based promotion
+archive_max_size: 32
+forgotten_eval_every: 250
+forgotten_result_margin: 0.001
+forgotten_min_episodes: 50_000
+
+tags: ["chess"]
+experiment_name: "Chess_SelfPlay"

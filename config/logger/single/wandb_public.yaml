@@ -1,0 +1,6 @@
+_target_: jaxpot.loggers.wandb.WandbLogger
+project_name: "Jaxpot Public"
+run_name: ${experiment_name}
+entity: team-bards-ai
+run_id: null
+tags: ${tags}

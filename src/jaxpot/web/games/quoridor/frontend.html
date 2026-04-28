@@ -1,0 +1,446 @@
+<style>
+  /* Info bar */
+  #info-bar {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+  .player-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .player-info.you { border-color: rgba(110,231,183,0.25); }
+  .player-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .player-dot.dark {
+    background: radial-gradient(circle at 40% 35%, #6b5b4e, #2c2318);
+    border: 2px solid #8b7d6b;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .player-dot.light {
+    background: radial-gradient(circle at 40% 35%, #f5efe6, #c8bfb0);
+    border: 2px solid #a89f90;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .wall-pips { display: flex; gap: 2px; margin-left: 2px; }
+  .wall-pip {
+    width: 4px; height: 12px; border-radius: 1px;
+    background: rgba(255,255,255,0.18);
+    transition: background 0.2s;
+  }
+  .wall-pip.used { background: rgba(255,255,255,0.04); }
+
+  /* Board */
+  #board-wrap {
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(145deg, #1e1b2e, #161425);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  #board { display: grid; gap: 0; border-radius: 4px; overflow: hidden; }
+
+  .cell {
+    background: #2a2845;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: background 0.15s, box-shadow 0.15s;
+    border-radius: 3px;
+  }
+  .cell.goal-top { background: linear-gradient(to bottom, rgba(107,91,78,0.25), #2a2845); }
+  .cell.goal-bot { background: linear-gradient(to top, rgba(200,191,176,0.15), #2a2845); }
+  .cell.clickable {
+    cursor: pointer;
+    background: rgba(110,231,183,0.12);
+    box-shadow: inset 0 0 0 2px rgba(110,231,183,0.3);
+  }
+  .cell.clickable:hover {
+    background: rgba(110,231,183,0.25);
+    box-shadow: inset 0 0 0 2px rgba(110,231,183,0.6);
+  }
+
+  .gap-h, .gap-v, .gap-cross { background: #1a1730; position: relative; }
+  .gap-cross { border-radius: 1px; }
+  .gap-h.wall-interactive, .gap-v.wall-interactive, .gap-cross.wall-interactive { cursor: pointer; }
+
+  .pawn {
+    width: 68%; height: 68%; border-radius: 50%;
+    position: absolute; z-index: 5;
+    transition: transform 0.2s ease;
+  }
+  .pawn.p0 {
+    background: radial-gradient(circle at 38% 32%, #7a6b5a, #2c2318);
+    border: 2.5px solid #9b8b78;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.15);
+  }
+  .pawn.p1 {
+    background: radial-gradient(circle at 38% 32%, #f7f1e8, #c0b5a4);
+    border: 2.5px solid #b0a594;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
+  }
+
+  .gap-h.wall-placed, .gap-v.wall-placed, .gap-cross.wall-placed {
+    background: linear-gradient(135deg, #c9a84c, #a07830) !important;
+    box-shadow: 0 0 3px rgba(201,168,76,0.4);
+    z-index: 3;
+  }
+  .gap-h.wall-preview-h, .gap-cross.wall-preview-h { background: rgba(217,170,75,0.3) !important; }
+  .gap-v.wall-preview-v, .gap-cross.wall-preview-v { background: rgba(120,160,230,0.3) !important; }
+
+  .coord {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.2); user-select: none;
+  }
+
+  #instructions {
+    max-width: 480px; margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    font-size: 0.8em; line-height: 1.7; color: #6b6b80;
+  }
+  #instructions h3 { color: #9b9bb0; margin-bottom: 6px; font-size: 1em; font-weight: 600; }
+  #instructions strong { color: #9b9bb0; }
+  .hint-h { color: #d9aa4b; }
+  .hint-v { color: #78a0e6; }
+  .hint-move { color: #6ee7b7; }
+</style>
+
+<div id="info-bar">
+  <div class="player-info" id="info-p0">
+    <span class="player-dot dark"></span>
+    <span id="label-p0">Dark</span>
+    <div class="wall-pips" id="pips-p0"></div>
+  </div>
+  <div class="player-info" id="info-p1">
+    <span class="player-dot light"></span>
+    <span id="label-p1">Light</span>
+    <div class="wall-pips" id="pips-p1"></div>
+  </div>
+</div>
+
+<div id="board-wrap">
+  <div id="board"></div>
+</div>
+
+<div id="instructions">
+  <h3>How to Play</h3>
+  <p><strong>Goal:</strong> Move your pawn to the opposite edge of the board.</p>
+  <p><strong>Move:</strong> Click any <span class="hint-move">highlighted cell</span> to move.</p>
+  <p><strong>Walls:</strong> Hover over the grooves between cells to preview a wall, then click to place it.
+     Walls span 2 cells and you cannot fully block a path.</p>
+</div>
+
+<script>
+const Q_BOARD_SIZE = 9;
+const Q_WALL_SIZE = 8;
+const Q_CELL = 54;
+const Q_GAP = 12;
+
+let legalByTarget = {};
+let legalHWalls = {};
+let legalVWalls = {};
+let previewEls = [];
+let previewDir = null;
+let previewWR = null;
+let previewWC = null;
+
+function initGame() {
+  buildGrid();
+  attachGrooveListeners();
+}
+
+function buildGrid() {
+  const board = document.getElementById('board');
+  const n = Q_BOARD_SIZE * 2 - 1;
+  const colTracks = ['18px'];
+  const rowTracks = ['18px'];
+  for (let i = 0; i < n; i++) {
+    const size = (i % 2 === 0 ? Q_CELL : Q_GAP) + 'px';
+    colTracks.push(size);
+    rowTracks.push(size);
+  }
+  colTracks.push('18px');
+  rowTracks.push('18px');
+  board.style.gridTemplateColumns = colTracks.join(' ');
+  board.style.gridTemplateRows = rowTracks.join(' ');
+  board.innerHTML = '';
+
+  const totalCols = n + 2;
+  const totalRows = n + 2;
+  const COL_LETTERS = 'abcdefghi';
+
+  for (let gr = 0; gr < totalRows; gr++) {
+    for (let gc = 0; gc < totalCols; gc++) {
+      const div = document.createElement('div');
+      const isTopLabel = gr === 0;
+      const isBotLabel = gr === totalRows - 1;
+      const isLeftLabel = gc === 0;
+      const isRightLabel = gc === totalCols - 1;
+
+      if (isTopLabel || isBotLabel) {
+        div.className = 'coord';
+        const ci = gc - 1;
+        if (ci >= 0 && ci < n && ci % 2 === 0) div.textContent = COL_LETTERS[ci / 2];
+        board.appendChild(div);
+        continue;
+      }
+      if (isLeftLabel || isRightLabel) {
+        div.className = 'coord';
+        const ri = gr - 1;
+        if (ri >= 0 && ri < n && ri % 2 === 0) div.textContent = 8 - ri / 2 + 1;
+        board.appendChild(div);
+        continue;
+      }
+
+      const bi = gr - 1;
+      const bj = gc - 1;
+      const isRowCell = bi % 2 === 0;
+      const isColCell = bj % 2 === 0;
+
+      if (isRowCell && isColCell) {
+        const boardRow = 8 - bi / 2;
+        const boardCol = bj / 2;
+        div.className = 'cell';
+        div.dataset.row = boardRow;
+        div.dataset.col = boardCol;
+        if (boardRow === 8) div.classList.add('goal-top');
+        if (boardRow === 0) div.classList.add('goal-bot');
+        div.onclick = () => cellClick(boardRow, boardCol);
+      } else if (isRowCell && !isColCell) {
+        div.className = 'gap-v';
+        div.dataset.bi = bi;
+        div.dataset.bj = bj;
+      } else if (!isRowCell && isColCell) {
+        div.className = 'gap-h';
+        div.dataset.bi = bi;
+        div.dataset.bj = bj;
+      } else {
+        div.className = 'gap-cross';
+        div.dataset.wallRow = 7 - (bi - 1) / 2;
+        div.dataset.wallCol = (bj - 1) / 2;
+        div.dataset.bi = bi;
+        div.dataset.bj = bj;
+      }
+      board.appendChild(div);
+    }
+  }
+}
+
+function indexLegalActions() {
+  legalByTarget = {};
+  legalHWalls = {};
+  legalVWalls = {};
+  if (!gameState || gameState.terminated) return;
+  for (const a of gameState.legal_actions) {
+    if (a.type === 'move' || a.type === 'jump' || a.type === 'diagonal') {
+      legalByTarget[a.target_row + ',' + a.target_col] = a.id;
+    } else if (a.type === 'h_wall') {
+      legalHWalls[a.wall_row + ',' + a.wall_col] = a.id;
+    } else if (a.type === 'v_wall') {
+      legalVWalls[a.wall_row + ',' + a.wall_col] = a.id;
+    }
+  }
+}
+
+function gapChildIndex(bi, bj) {
+  const totalCols = Q_BOARD_SIZE * 2 - 1 + 2;
+  return (bi + 1) * totalCols + (bj + 1);
+}
+
+function renderBoard() {
+  if (!gameState) return;
+  indexLegalActions();
+  const board = document.getElementById('board');
+
+  board.querySelectorAll('.pawn').forEach(e => e.remove());
+  board.querySelectorAll('.wall-placed').forEach(el => el.classList.remove('wall-placed'));
+
+  board.querySelectorAll('.cell').forEach(cell => {
+    const key = cell.dataset.row + ',' + cell.dataset.col;
+    cell.classList.toggle('clickable', legalByTarget[key] !== undefined);
+  });
+
+  markInteractiveGrooves(board);
+  drawPlacedWalls(board);
+
+  const n = Q_BOARD_SIZE * 2 - 1;
+  const totalCols = n + 2;
+  for (let p = 0; p < 2; p++) {
+    const pawn = gameState.pawns[p];
+    const gi = (8 - pawn.row) * 2 + 1;
+    const gj = pawn.col * 2 + 1;
+    const idx = gi * totalCols + gj;
+    const cell = board.children[idx];
+    if (cell) {
+      const dot = document.createElement('div');
+      dot.className = 'pawn p' + p;
+      cell.appendChild(dot);
+    }
+  }
+
+  updateInfoBar();
+  updateGameStatus();
+}
+
+function drawPlacedWalls(board) {
+  for (const w of gameState.h_walls) {
+    const bi = 15 - 2 * w.row;
+    [2*w.col, 2*w.col+1, 2*w.col+2].forEach(bj => {
+      const el = board.children[gapChildIndex(bi, bj)];
+      if (el) el.classList.add('wall-placed');
+    });
+  }
+  for (const w of gameState.v_walls) {
+    const bj = 2 * w.col + 1;
+    [14 - 2*w.row, 15 - 2*w.row, 16 - 2*w.row].forEach(bi => {
+      const el = board.children[gapChildIndex(bi, bj)];
+      if (el) el.classList.add('wall-placed');
+    });
+  }
+}
+
+function grooveToWall(el, mouseEvent) {
+  const bi = parseInt(el.dataset.bi);
+  const bj = parseInt(el.dataset.bj);
+
+  if (el.classList.contains('gap-h')) {
+    const wr = (15 - bi) / 2;
+    const c1 = bj / 2, c2 = bj / 2 - 1;
+    if (legalHWalls[wr+','+c1] !== undefined) return {dir:'h', wr, wc:c1};
+    if (c2 >= 0 && legalHWalls[wr+','+c2] !== undefined) return {dir:'h', wr, wc:c2};
+    return null;
+  }
+  if (el.classList.contains('gap-v')) {
+    const wc = (bj - 1) / 2;
+    const r1 = (16 - bi) / 2, r2 = (14 - bi) / 2;
+    if (r1 >= 0 && r1 < 8 && legalVWalls[r1+','+wc] !== undefined) return {dir:'v', wr:r1, wc};
+    if (r2 >= 0 && r2 < 8 && legalVWalls[r2+','+wc] !== undefined) return {dir:'v', wr:r2, wc};
+    return null;
+  }
+  if (el.classList.contains('gap-cross')) {
+    const wr = parseInt(el.dataset.wallRow);
+    const wc = parseInt(el.dataset.wallCol);
+    const rect = el.getBoundingClientRect();
+    const dx = Math.abs(mouseEvent.clientX - (rect.left + rect.width / 2));
+    const dy = Math.abs(mouseEvent.clientY - (rect.top + rect.height / 2));
+    const preferH = dx >= dy;
+    if (preferH && legalHWalls[wr+','+wc] !== undefined) return {dir:'h', wr, wc};
+    if (!preferH && legalVWalls[wr+','+wc] !== undefined) return {dir:'v', wr, wc};
+    if (legalHWalls[wr+','+wc] !== undefined) return {dir:'h', wr, wc};
+    if (legalVWalls[wr+','+wc] !== undefined) return {dir:'v', wr, wc};
+    return null;
+  }
+  return null;
+}
+
+function showWallPreview(dir, wr, wc) {
+  if (previewDir === dir && previewWR === wr && previewWC === wc) return;
+  hideWallPreview();
+  previewDir = dir; previewWR = wr; previewWC = wc;
+  const board = document.getElementById('board');
+  const cls = dir === 'h' ? 'wall-preview-h' : 'wall-preview-v';
+  if (dir === 'h') {
+    const bi = 15 - 2 * wr;
+    [2*wc, 2*wc+1, 2*wc+2].forEach(bj => {
+      const el = board.children[gapChildIndex(bi, bj)];
+      if (el) { el.classList.add(cls); previewEls.push(el); }
+    });
+  } else {
+    const bj = 2 * wc + 1;
+    [14 - 2*wr, 15 - 2*wr, 16 - 2*wr].forEach(bi => {
+      const el = board.children[gapChildIndex(bi, bj)];
+      if (el) { el.classList.add(cls); previewEls.push(el); }
+    });
+  }
+}
+
+function hideWallPreview() {
+  previewEls.forEach(el => el.classList.remove('wall-preview-h', 'wall-preview-v'));
+  previewEls = [];
+  previewDir = previewWR = previewWC = null;
+}
+
+function markInteractiveGrooves(board) {
+  board.querySelectorAll('.gap-h, .gap-v, .gap-cross').forEach(el => el.classList.remove('wall-interactive'));
+  board.querySelectorAll('.gap-h').forEach(el => {
+    const bi = parseInt(el.dataset.bi), bj = parseInt(el.dataset.bj);
+    const wr = (15 - bi) / 2;
+    const c1 = bj / 2, c2 = bj / 2 - 1;
+    if (legalHWalls[wr+','+c1] !== undefined || (c2 >= 0 && legalHWalls[wr+','+c2] !== undefined))
+      el.classList.add('wall-interactive');
+  });
+  board.querySelectorAll('.gap-v').forEach(el => {
+    const bi = parseInt(el.dataset.bi), bj = parseInt(el.dataset.bj);
+    const wc = (bj - 1) / 2;
+    const r1 = (16 - bi) / 2, r2 = (14 - bi) / 2;
+    if ((r1 >= 0 && r1 < 8 && legalVWalls[r1+','+wc] !== undefined) ||
+        (r2 >= 0 && r2 < 8 && legalVWalls[r2+','+wc] !== undefined))
+      el.classList.add('wall-interactive');
+  });
+  board.querySelectorAll('.gap-cross').forEach(el => {
+    const key = el.dataset.wallRow + ',' + el.dataset.wallCol;
+    if (legalHWalls[key] !== undefined || legalVWalls[key] !== undefined)
+      el.classList.add('wall-interactive');
+  });
+}
+
+function attachGrooveListeners() {
+  const board = document.getElementById('board');
+  board.querySelectorAll('.gap-h, .gap-v, .gap-cross').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const wall = grooveToWall(el, e);
+      if (wall) showWallPreview(wall.dir, wall.wr, wall.wc);
+      else hideWallPreview();
+    });
+    el.addEventListener('mouseleave', hideWallPreview);
+    el.addEventListener('click', (e) => {
+      if (!gameState || gameState.terminated) return;
+      const wall = grooveToWall(el, e);
+      if (!wall) return;
+      const key = wall.wr + ',' + wall.wc;
+      const actionId = wall.dir === 'h' ? legalHWalls[key] : legalVWalls[key];
+      if (actionId === undefined) return;
+      hideWallPreview();
+      makeMove(actionId);
+    });
+  });
+}
+
+function updateInfoBar() {
+  const w = gameState.walls_remaining;
+  for (let p = 0; p < 2; p++) {
+    const pips = document.getElementById('pips-p' + p);
+    pips.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const pip = document.createElement('div');
+      pip.className = 'wall-pip' + (i >= w[p] ? ' used' : '');
+      pips.appendChild(pip);
+    }
+  }
+  const hp = gameState.human_player;
+  document.getElementById('info-p0').classList.toggle('you', hp === 0);
+  document.getElementById('info-p1').classList.toggle('you', hp === 1);
+  document.getElementById('label-p0').textContent = hp === 0 ? 'You' : 'Bot';
+  document.getElementById('label-p1').textContent = hp === 1 ? 'You' : 'Bot';
+}
+
+function cellClick(row, col) {
+  if (!gameState || gameState.terminated) return;
+  const actionId = legalByTarget[row + ',' + col];
+  if (actionId === undefined) return;
+  makeMove(actionId);
+}
+</script>
