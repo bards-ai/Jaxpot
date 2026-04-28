@@ -10,7 +10,7 @@
 ![pgx](https://img.shields.io/badge/envs-pgx-success)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-https://github.com/user-attachments/assets/1504fba1-f9f4-45a0-99d7-8c8078790911
+<img src="public/dark%20hex%20720%20at%2020.gif" width="720" alt="Jaxpot dark hex self-play demo" />
 
 </div>
 
