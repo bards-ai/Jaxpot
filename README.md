@@ -50,7 +50,7 @@ This walkthrough adds **Tic-Tac-Toe** as a new environment and trains a small ML
 Jaxpot uses [Hydra](https://hydra.cc/) for configuration. A training run is assembled by composing four kinds of YAML files:
 
 <p align="center">
-  <img src="public/diagrams/hydra-experiment-composition.png" width="720" alt="Hydra experiment composition" />
+  <img src="public/diagrams/training-loop-cycle.png" width="720" alt="Hydra experiment composition" />
 </p>
 
 
@@ -87,6 +87,9 @@ hidden_dims: [64, 64]
 ```
 
 ## 3. Add the experiment config
+<p align="center">
+  <img src="public/diagrams/hydra-experiment-composition.png" width="720" alt="Hydra experiment composition" />
+</p>
 
 Create `config/experiment/tic_tac_toe/fast.yaml`. This is the only file that ties everything together and sets training hyperparameters:
 
@@ -167,10 +170,10 @@ config/experiment/tic_tac_toe/fast.yaml
 
 To adapt this to a different `pgx` game, copy the three files, change the `_target_` of the env, update `obs_shape` / `action_dim` in the model to match the new env's `observation_shape` and `num_actions`, and bump `num_steps`, `selfplay_num_envs`, and `total_iters` for larger games.
 
-## Results — Dark Hex 7x7
+## Example Results Dark Hex 7x7
 
 <p align="center">
-  <img src="visualizations/article_charts/dark_hex_article_panel.png" width="780" alt="Dark Hex training results" />
+  <img src="public/diagrams/run-train-eval-dashboard.png" width="780" alt="Dark Hex training results" />
 </p>
 
 Self-play PPO checkpoints rated by round-robin Elo and win-rate vs random. See [`scripts/plot_dark_hex_training_charts.py`](scripts/plot_dark_hex_training_charts.py) for the plotting code and [`visualizations/article_charts/`](visualizations/article_charts/) for the underlying JSON.
