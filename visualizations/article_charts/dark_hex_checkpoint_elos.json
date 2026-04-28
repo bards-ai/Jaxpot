@@ -1,0 +1,376 @@
+{
+  "elos": {
+    "200": {
+      "elo": 982.6162386914788,
+      "relative_elo": -17.383761308521233,
+      "rough_std": 55.51126436474924
+    },
+    "400": {
+      "elo": 1057.8284140753444,
+      "relative_elo": 57.828414075344426,
+      "rough_std": 55.51126436474924
+    },
+    "600": {
+      "elo": 1038.2583756397846,
+      "relative_elo": 38.258375639784575,
+      "rough_std": 55.51126436474924
+    },
+    "800": {
+      "elo": 961.1922770911996,
+      "relative_elo": -38.807722908800415,
+      "rough_std": 55.51126436474924
+    },
+    "1000": {
+      "elo": 999.7343013369505,
+      "relative_elo": -0.26569866304954104,
+      "rough_std": 55.51126436474924
+    },
+    "1200": {
+      "elo": 980.508131055462,
+      "relative_elo": -19.491868944538105,
+      "rough_std": 55.51126436474924
+    },
+    "1400": {
+      "elo": 999.7309620860617,
+      "relative_elo": -0.26903791393823795,
+      "rough_std": 55.51126436474924
+    },
+    "1600": {
+      "elo": 1018.9425488855375,
+      "relative_elo": 18.94254888553741,
+      "rough_std": 55.51126436474924
+    },
+    "1800": {
+      "elo": 961.1887511381811,
+      "relative_elo": -38.811248861818896,
+      "rough_std": 55.51126436474924
+    }
+  },
+  "matchups": [
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 400,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 600,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1000,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1200,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 1,
+      "wins_b": 3,
+      "draws": 0,
+      "score_a": 0.25
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 1,
+      "wins_b": 3,
+      "draws": 0,
+      "score_a": 0.25
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 600,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 800,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1000,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1200,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 800,
+      "games": 4,
+      "wins_a": 1,
+      "wins_b": 3,
+      "draws": 0,
+      "score_a": 0.25
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1000,
+      "games": 4,
+      "wins_a": 4,
+      "wins_b": 0,
+      "draws": 0,
+      "score_a": 1.0
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1200,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1000,
+      "games": 4,
+      "wins_a": 0,
+      "wins_b": 4,
+      "draws": 0,
+      "score_a": 0.0
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1200,
+      "games": 4,
+      "wins_a": 1,
+      "wins_b": 3,
+      "draws": 0,
+      "score_a": 0.25
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1200,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 3,
+      "wins_b": 1,
+      "draws": 0,
+      "score_a": 0.75
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1400,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 0,
+      "wins_b": 4,
+      "draws": 0,
+      "score_a": 0.0
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1600,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 2,
+      "wins_b": 2,
+      "draws": 0,
+      "score_a": 0.5
+    },
+    {
+      "checkpoint_a": 1600,
+      "checkpoint_b": 1800,
+      "games": 4,
+      "wins_a": 4,
+      "wins_b": 0,
+      "draws": 0,
+      "score_a": 1.0
+    }
+  ],
+  "note": "Elo is estimated from this local post-hoc round-robin, not from W&B training logs."
+}

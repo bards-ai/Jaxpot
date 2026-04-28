@@ -1,0 +1,11 @@
+{
+  "run": "outputs/2026-04-21/train_selfplay.yaml/dark_hex_7x7_fast_17-46-56",
+  "random_win_rate_at_500": 0.9924906492233276,
+  "random_win_rate_last_eval": 0.9920127391815186,
+  "total_loss_at_500": 0.21614804863929749,
+  "total_loss_last": 0.13712367415428162,
+  "value_loss_at_500": 0.22709918022155762,
+  "value_loss_last": 0.14926303923130035,
+  "replay_file": "visualizations/dark_hex_7x7_matches.json",
+  "note": "Checkpoint Elo needs a larger round-robin or more saved milestones. These charts use real logged metrics and sparse replay outcomes only."
+}

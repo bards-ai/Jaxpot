@@ -1,0 +1,1028 @@
+{
+  "run_dir": "/home/kklusek/dev/Jaxpot/outputs/2026-04-22/train_selfplay.yaml/dark_hex_7x7_elo_milestones_13-17-48",
+  "checkpoints": [
+    200,
+    400,
+    600,
+    800,
+    1000,
+    1200,
+    1400,
+    1600,
+    1800
+  ],
+  "games_per_color": 2,
+  "seed": 20260422,
+  "max_steps": 160,
+  "deterministic": false,
+  "results": [
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 38
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 17
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 42
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 41
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 15
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 35
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 34
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 42
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 36
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 52
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 28
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 26
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 32
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 87
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 87
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 50
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 39
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 47
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 59
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 16
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 200,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 25
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 37
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 55
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 28
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 51
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 29
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 17
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 17
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 77
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 72
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 400,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 800,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 29
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 17
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 15
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 44
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 54
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 25
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 60
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 53
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 60
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 15
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 600,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1000,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1000,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 13
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 15
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 17
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 29
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 32
+    },
+    {
+      "checkpoint_a": 800,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 30
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1200,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 15
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1200,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 14
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 28
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 34
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 22
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1000,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1400,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1400,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "b",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 28
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 28
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 18
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1200,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 24
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1600,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 20
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1600,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 19
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 96
+    },
+    {
+      "checkpoint_a": 1400,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "b",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 1600,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 23
+    },
+    {
+      "checkpoint_a": 1600,
+      "checkpoint_b": 1800,
+      "a_color": "black",
+      "winner": "a",
+      "plies": 21
+    },
+    {
+      "checkpoint_a": 1600,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 30
+    },
+    {
+      "checkpoint_a": 1600,
+      "checkpoint_b": 1800,
+      "a_color": "white",
+      "winner": "a",
+      "plies": 21
+    }
+  ]
+}
