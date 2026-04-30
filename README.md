@@ -16,6 +16,10 @@
 
 Jaxpot is a reinforcement learning framework primarily focused on training for [pgx](https://github.com/sotetsuk/pgx)-based environments, using scalable distributed training with JAX. The repository includes configuration files for models (such as ResNet), environments, and training regimes (PPO), as well as support for multi-agent league play, baseline evaluation, and tools for experiment logging and reproducibility.
 
+## Guides
+- [Quickstack Guide on Substack](https://bardsai.substack.com/p/jaxpot)
+- [Google Colab Quickstart](https://colab.research.google.com/drive/1-rm_Bh8CNaM861We97ZoicfgKxz0xOSi?usp=sharing)
+
 ## Installation
 
 Jaxpot targets Python 3.12 and is easiest to run with [uv](https://docs.astral.sh/uv/):
