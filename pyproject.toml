@@ -49,9 +49,6 @@ dev = [
     "pandas-stubs>=2.3.3.251201",
 ]
 
-[project.scripts]
-jaxpot = "jaxpot.cli:main"
-
 [tool.setuptools]
 package-dir = { "" = "src" }
 
